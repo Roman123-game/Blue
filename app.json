@@ -1,4 +1,9 @@
 {
   "name": "BluetoothMonitor",
-  "displayName": "BluetoothMonitor"
+  "displayName": "BluetoothMonitor",
+  "extra": {
+    "eas": {
+      "projectId": "5452f1a3-779d-49da-8e84-6948fbd6536e"
+    }
+  }
 }
