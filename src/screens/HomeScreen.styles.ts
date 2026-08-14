@@ -89,7 +89,7 @@ export default StyleSheet.create({
   },
   bottomRow: {
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 80,
   },
   name: {
     fontSize: 18,
