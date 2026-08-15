@@ -1,9 +1,17 @@
 {
-  "name": "BluetoothMonitor",
-  "displayName": "BluetoothMonitor",
-  "extra": {
-    "eas": {
-      "projectId": "5452f1a3-779d-49da-8e84-6948fbd6536e"
+  "expo": {
+    "name": "BluetoothMonitor",
+    "slug": "bluetooth-monitor",
+    "icon": "./assets/icon.png",
+
+    "android": {
+      "package": "com.bluetoothmonitor"
+    },
+
+    "extra": {
+      "eas": {
+        "projectId": "5452f1a3-779d-49da-8e84-6948fbd6536e"
+      }
     }
   }
 }
