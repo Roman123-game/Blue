@@ -97,16 +97,6 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  distanceLabel: {
-    fontSize: 16,
-    color: '#5f6b91',
-    marginTop: 8,
-  },
-  gaugeSubValue: {
-    fontSize: 14,
-    color: '#5f6b91',
-    marginTop: 4,
-  },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
