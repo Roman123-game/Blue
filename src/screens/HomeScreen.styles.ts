@@ -15,7 +15,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   gaugeCard: {
-    marginTop: 12,
+    marginTop: -82,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
@@ -89,7 +89,9 @@ export default StyleSheet.create({
   },
   bottomRow: {
     alignItems: 'center',
-    marginTop: 0,
+    position: 'relative',
+    bottom: 30,
+    zIndex: 10,
   },
   name: {
     fontSize: 18,

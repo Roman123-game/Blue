@@ -47,4 +47,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
 });
