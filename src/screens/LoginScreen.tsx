@@ -21,13 +21,8 @@ export default function LoginScreen({ onEnter }: Props) {
     if (requesting) {
       return;
     }
-
     setRequesting(true);
-
-    try {
-      setMessage(
-        'We need a few permissions to set up Child Safety.',
-      );
+    try {setMessage('We need a few permissions to set up Child Safety.');
 
       const {
         location,
@@ -44,15 +39,12 @@ export default function LoginScreen({ onEnter }: Props) {
       // ------------------------------------------
 
       if (!location || !nearbyDevices) {
-        setMessage(
-          'Location and Nearby Devices permissions are required to continue.',
-        );
+        setMessage('Location and Nearby Devices permissions are required to continue.');
 
         Alert.alert(
           'Permissions needed',
           'Please allow Location and Nearby Devices permissions to use Child Safety.',
         );
-
         return;
       }
 
@@ -60,9 +52,7 @@ export default function LoginScreen({ onEnter }: Props) {
       // Permissions granted
       // ------------------------------------------
 
-      setMessage(
-        'Permissions granted!\n\nPlease make sure Bluetooth is turned on.',
-      );
+      setMessage('Permissions granted!\n\nPlease make sure Bluetooth is turned on.');
 
       Alert.alert(
         'Turn on Bluetooth',
@@ -78,14 +68,8 @@ export default function LoginScreen({ onEnter }: Props) {
         ],
       );
     } catch (error) {
-      console.log(
-        'PERMISSION REQUEST ERROR:',
-        error,
-      );
-
-      setMessage(
-        'Unable to request permissions. Please try again.',
-      );
+      console.log('PERMISSION REQUEST ERROR:',error);
+      setMessage('Unable to request permissions. Please try again.');
 
       Alert.alert(
         'Permission error',
