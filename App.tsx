@@ -5,7 +5,7 @@ import LoginScreen from './src/screens/LoginScreen';
 export default function App() {
   const [entered, setEntered] = useState(false);
 
-    if (entered) {return <HomeScreen />;}
+    if (entered) {return <HomeScreen onBack={() => setEntered(false)} />;}
 
     return <LoginScreen onEnter={() => setEntered(true)} />;
   

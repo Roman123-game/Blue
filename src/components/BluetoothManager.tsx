@@ -14,7 +14,10 @@ type Device = {
   name: string;
   address: string;
 };
-export default function BluetoothManager() {
+interface Props {
+  onBack?: () => void;
+}
+export default function BluetoothManager({ onBack }: Props) {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -76,12 +79,14 @@ export default function BluetoothManager() {
   }
   return (
     <View style={styles.container}>
+      {onBack && (
+        <TouchableOpacity style={styles.button} onPress={onBack}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+      )}
       <Text style={styles.title}>Bluetooth Devices</Text>
-      <TouchableOpacity style={styles.button} onPress={loadBluetoothDevices}>
-        <Text style={styles.buttonText}>Refresh</Text>
-      </TouchableOpacity>
       {loading && <ActivityIndicator size="large" />}
-      {error !== '' && <Text style={styles.error}>{error}</Text>}a
+      {error !== '' && <Text style={styles.error}>{error}</Text>}
       <FlatList
         data={devices}
         keyExtractor={item => item.address}
@@ -93,6 +98,9 @@ export default function BluetoothManager() {
         )}
         ListEmptyComponent={<Text>No paired Bluetooth devices</Text>}
       />
+      <TouchableOpacity style={styles.button} onPress={loadBluetoothDevices}>
+        <Text style={styles.buttonText}>Refresh</Text>
+      </TouchableOpacity>
     </View>
   );
 }

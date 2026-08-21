@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import useBluetooth from "../hooks/useBluetooth";
 import ScanButton from '../components/ScanButton';
 import DeviceCard from '../components/DeviceCard';
@@ -10,7 +10,12 @@ import ConnectionStatus from '../components/ConnectionStatus';
 import CarTopView from '../components/CarTopView';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
 import styles from './HomeScreen.styles';
-export default function HomeScreen() {
+
+interface Props {
+  onBack?: () => void;
+}
+
+export default function HomeScreen({ onBack }: Props) {
   const {
     devices,
     scanning,
@@ -38,7 +43,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {!connectedDevice && (
+      {!connectedDevice && devices.length === 0 && (
         <View style={styles.emptyState}>
           <Text style={styles.title}>Connect Device</Text>
           <ScanButton scanning={scanning} onPress={scanDevices} />
@@ -89,21 +94,30 @@ export default function HomeScreen() {
         </View>
       ) : (
         <>
-          <Text style={styles.subtitle}>Devices</Text>
-          <FlatList
-            data={devices}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <DeviceCard
-                device={item}
-                connected={connectedDevice?.id === item.id}
-                onConnect={connect}
+          {devices.length > 0 && (
+            <>
+              <Text style={styles.subtitle}>Devices</Text>
+              <FlatList
+                data={devices}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                  <DeviceCard
+                    device={item}
+                    connected={connectedDevice?.id === item.id}
+                    onConnect={connect}
+                  />
+                )}
               />
-            )}
-          />
+              {onBack && (
+                <TouchableOpacity style={styles.button} onPress={onBack}>
+                  <Text style={styles.buttonText}>Back</Text>
+                </TouchableOpacity>
+              )}
+            </>
+          )}
         </>
       )}
-      
+
     </View>
   );
 }

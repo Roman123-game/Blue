@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -7,31 +7,41 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   emptyState: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   gaugeCard: {
     marginTop: -82,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: '#f2f4ff',
-    alignItems: 'flex-start',
+    backgroundColor: "#f2f4ff",
+    alignItems: "flex-start",
   },
   gaugeLabel: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#4b5b8a',
+    fontWeight: "600",
+    color: "#4b5b8a",
     marginBottom: 4,
   },
   gaugeValue: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1f2b4d',
+    fontWeight: "bold",
+    color: "#1f2b4d",
+  },
+  gaugeSubValue: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#4b5b8a",
+  },
+  distanceLabel: {
+    fontSize: 12,
+    color: "#8188a3",
+    marginTop: 4,
   },
   box: {
     marginTop: 20,
@@ -42,30 +52,30 @@ export default StyleSheet.create({
   connectedContainer: {
     flex: 1,
     marginTop: 20,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingBottom: 12,
     marginTop: -18,
   },
   nameRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 6,
     borderWidth: 1,
-    borderColor: '#e1e4ee',
+    borderColor: "#e1e4ee",
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   strengthWrap: {
     minWidth: 120,
@@ -74,9 +84,9 @@ export default StyleSheet.create({
   separator: {
     width: 1,
     height: 40,
-    backgroundColor: '#e1e4ee',
+    backgroundColor: "#e1e4ee",
     marginHorizontal: 12,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
   batteryWrap: {
@@ -84,22 +94,40 @@ export default StyleSheet.create({
   },
   carWrap: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomRow: {
-    alignItems: 'center',
-    position: 'relative',
+    alignItems: "center",
+    position: "relative",
     bottom: 30,
     zIndex: 10,
   },
   name: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 20,
+  },
+  button: {
+    marginTop: 16,
+    alignSelf: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#e1e4ee",
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1f2b4d",
+    marginTop: -56,
+    backgroundColor: "gray",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
   },
 });
