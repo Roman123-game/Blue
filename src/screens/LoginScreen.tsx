@@ -66,7 +66,7 @@ export default function LoginScreen({ onEnter }: Props) {
 
       Alert.alert(
         'Turn on Bluetooth',
-        'Please turn on Bluetooth on your phone before continuing so Child Safety can find nearby devices.',
+        'Please turn on Bluetooth on your phone before continuing.',
         [
           {
             text: 'OK',
