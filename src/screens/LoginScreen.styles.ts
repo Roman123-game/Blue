@@ -1,53 +1,68 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
-    backgroundColor: "#1f2b4d",
+    backgroundColor: '#080c18',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
   },
+
   logo: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: "#3b82f6",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 36,
+    alignItems: 'center',
+    marginBottom: 30,
   },
+
   logoEmoji: {
-    color: "#1f2b4d",
-    fontSize: 48,
-    fontWeight: "700",
-    textAlign: "center",
+    fontSize: 64,
+    marginBottom: 10,
   },
+
   logoSubText: {
-    color: "#1f2b4d",
-    fontSize: 12,
-    fontWeight: "700",
-    marginTop: 6,
-    letterSpacing: 0.4,
-    textTransform: "uppercase",
-    backgroundColor: "transparent",
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    borderRadius: 0,
-    overflow: "visible",
+    color: '#ffffff',
+    fontSize: 28,
+    fontWeight: '700',
   },
-  button: {
-    backgroundColor: "#3b82f6",
-    paddingHorizontal: 40,
-    paddingVertical: 12,
-    borderRadius: 8,
+
+  permissionMessage: {
+    width: '90%',
+    maxWidth: 400,
+    marginBottom: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+    borderRadius: 14,
+    backgroundColor: '#1a2235',
+    borderWidth: 1,
+    borderColor: '#303b55',
   },
-  buttonText: {
-    color: "#fff",
+
+  permissionMessageText: {
+    color: '#ffffff',
     fontSize: 16,
-    fontWeight: "600",
+    lineHeight: 24,
+    textAlign: 'center',
   },
+
+  button: {
+    width: '90%',
+    maxWidth: 400,
+    height: 54,
+    borderRadius: 14,
+    backgroundColor: '#3478f6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   buttonDisabled: {
     opacity: 0.6,
   },
+
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
 });
+
+export default styles;

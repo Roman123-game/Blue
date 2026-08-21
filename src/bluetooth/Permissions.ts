@@ -1,83 +1,92 @@
-import { PermissionsAndroid, Platform } from 'react-native';
-import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import {
+  Platform,
+  PermissionsAndroid,
+} from 'react-native';
 
-export type PermissionState = {
-  /** True when the user granted access to the device location. */
+export interface LoginPermissionsResult {
   location: boolean;
-  /** True when the user granted access to nearby (Bluetooth) devices. */
   nearbyDevices: boolean;
-};
+}
 
-async function requestAndroidLoginPermissions(): Promise<PermissionState> {
-  // Before Android 12 (API 31) the location permission is what unlocks
-  // Bluetooth LE scanning, so a single request covers both.
-  const androidVersion =
-    typeof Platform.Version === 'number'
-      ? Platform.Version
-      : parseInt(Platform.Version, 10);
-
-  if (androidVersion < 31) {
-    const granted =
-      (await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      )) === PermissionsAndroid.RESULTS.GRANTED;
-
-    return { location: granted, nearbyDevices: granted };
+export async function requestLoginPermissions(): Promise<LoginPermissionsResult> {
+  if (Platform.OS !== 'android') {
+    return {
+      location: true,
+      nearbyDevices: true,
+    };
   }
 
-  const result = await PermissionsAndroid.requestMultiple([
+  // ------------------------------------------
+  // LOCATION
+  // ------------------------------------------
+
+  const locationResult = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
-    PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
-  ]);
+    {
+      title: 'Location Permission',
+      message:
+        'Child Safety needs location permission to find nearby devices.',
+      buttonPositive: 'Allow',
+      buttonNegative: 'Deny',
+    },
+  );
 
-  return {
-    location:
-      result[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
-      PermissionsAndroid.RESULTS.GRANTED,
-    nearbyDevices:
-      result[PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN] ===
-        PermissionsAndroid.RESULTS.GRANTED &&
-      result[PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT] ===
-        PermissionsAndroid.RESULTS.GRANTED,
-  };
-}
+  const location =
+    locationResult === PermissionsAndroid.RESULTS.GRANTED;
 
-async function requestIosLoginPermissions(): Promise<PermissionState> {
-  const [location, nearbyDevices] = await Promise.all([
-    request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE),
-    request(PERMISSIONS.IOS.BLUETOOTH),
-  ]);
+  console.log('LOCATION:', locationResult);
 
-  return {
-    location: location === RESULTS.GRANTED,
-    nearbyDevices: nearbyDevices === RESULTS.GRANTED,
-  };
-}
-
-/**
- * Requests the permissions needed when a user logs in:
- * location access and access to nearby (Bluetooth) devices.
- *
- * Resolves once the system permission dialogs have been answered.
- */
-export async function requestLoginPermissions(): Promise<PermissionState> {
-  if (Platform.OS === 'android') {
-    return requestAndroidLoginPermissions();
+  if (!location) {
+    return {
+      location: false,
+      nearbyDevices: false,
+    };
   }
 
-  if (Platform.OS === 'ios') {
-    return requestIosLoginPermissions();
+  // ------------------------------------------
+  // NEARBY DEVICES
+  // Android 12+
+  // ------------------------------------------
+
+  let nearbyDevices = true;
+
+  if (Platform.Version >= 31) {
+    const bluetoothResult =
+      await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+      ]);
+
+    const scanGranted =
+      bluetoothResult[
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN
+      ] === PermissionsAndroid.RESULTS.GRANTED;
+
+    const connectGranted =
+      bluetoothResult[
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT
+      ] === PermissionsAndroid.RESULTS.GRANTED;
+
+    nearbyDevices =
+      scanGranted && connectGranted;
+
+    console.log(
+      'BLUETOOTH_SCAN:',
+      bluetoothResult[
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN
+      ],
+    );
+
+    console.log(
+      'BLUETOOTH_CONNECT:',
+      bluetoothResult[
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT
+      ],
+    );
   }
 
-  // Other platforms do not require these permissions.
-  return { location: true, nearbyDevices: true };
-}
-
-/**
- * Legacy helper: requests only the nearby (Bluetooth) devices permission.
- */
-export async function requestBluetoothPermissions(): Promise<boolean> {
-  const state = await requestLoginPermissions();
-  return state.nearbyDevices;
+  return {
+    location,
+    nearbyDevices,
+  };
 }
