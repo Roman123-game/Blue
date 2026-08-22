@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text } from 'react-native';
-import styles from './BatteryIndicator.styles';
+import createStyles from './BatteryIndicator.styles';
+import { useThemeColors } from '../theme';
 
 
 interface Props {
@@ -12,12 +13,14 @@ export default function BatteryIndicator({
   battery,
   style,
 }: Props) {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
 return (
 
 <View style={[styles.container, style]}>
 
-<Text>
+<Text style={styles.label}>
 Battery:
 </Text>
 

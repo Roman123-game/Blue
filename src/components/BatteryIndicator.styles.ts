@@ -1,12 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { ThemeColors } from '../theme';
 
-export default StyleSheet.create({
-  container: {
-    marginTop: 10,
-  },
+export default (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      marginTop: 10,
+    },
 
-  value: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
+    label: {
+      color: c.textSecondary,
+    },
+
+    value: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: c.textPrimary,
+    },
+  });

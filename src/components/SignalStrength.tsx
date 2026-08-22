@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { View, Text } from 'react-native';
-import styles from './SignalStrength.styles';
+import createStyles from './SignalStrength.styles';
+import { useThemeColors } from '../theme';
 
 interface Props {
   rssi: number | null;
@@ -9,6 +10,9 @@ interface Props {
 }
 
 export default function SignalStrength({ rssi, inline = false }: Props) {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   let bars = 0;
 
   let label = 'Unknown';
@@ -62,7 +66,7 @@ export default function SignalStrength({ rssi, inline = false }: Props) {
 
       <Text style={styles.value}>{rssi === null ? 'N/A' : `${rssi} dBm`}</Text>
 
-      <Text>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
     </View>
   );
 }

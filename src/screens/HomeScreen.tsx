@@ -9,7 +9,8 @@ import DisconnectButton from '../components/DisconnectButton';
 import ConnectionStatus from '../components/ConnectionStatus';
 import CarTopView from '../components/CarTopView';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
-import styles from './HomeScreen.styles';
+import createStyles from './HomeScreen.styles';
+import { useThemeColors } from '../theme';
 
 interface Props {
   onBack?: () => void;
@@ -27,6 +28,8 @@ export default function HomeScreen({ onBack }: Props) {
     battery,
     connectionStatus,
   } = useBluetooth();
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const distanceMeters = useMemo(() => {
     if (rssi === null || rssi === undefined) {
       return null;

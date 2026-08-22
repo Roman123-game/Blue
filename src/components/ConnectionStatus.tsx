@@ -4,12 +4,14 @@ import {
   Text,
   StyleSheet
 } from "react-native";
+import { useThemeColors } from "../theme";
 interface Props{
 connected:boolean;
 }
 export default function ConnectionStatus({
 connected
 }:Props){
+const colors = useThemeColors();
 return (
 <View style={styles.container}>
 <View
@@ -25,7 +27,7 @@ connected
 }
 ]}
 />
-<Text style={styles.text}>
+<Text style={[styles.text, { color: colors.textPrimary }]}>
 {
 connected
 ?
