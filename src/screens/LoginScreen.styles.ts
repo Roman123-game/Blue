@@ -1,16 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#080c18',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#080c18",
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 24,
   },
 
   logo: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 30,
   },
 
@@ -20,38 +20,38 @@ const styles = StyleSheet.create({
   },
 
   logoSubText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   permissionMessage: {
-    width: '90%',
+    width: "90%",
     maxWidth: 400,
     marginBottom: 24,
     paddingHorizontal: 20,
     paddingVertical: 18,
     borderRadius: 14,
-    backgroundColor: '#1a2235',
+    backgroundColor: "#1a2235",
     borderWidth: 1,
-    borderColor: '#303b55',
+    borderColor: "#303b55",
   },
 
   permissionMessageText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
   button: {
-    width: '90%',
+    width: "90%",
     maxWidth: 400,
     height: 54,
     borderRadius: 14,
-    backgroundColor: '#3478f6',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#3478f6",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   buttonDisabled: {
@@ -59,10 +59,15 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: "700",
   },
+  logoImage: {
+    width: 120,
+    height: 120,
+    marginBottom: 12,
+  }
 });
 
 export default styles;

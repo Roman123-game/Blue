@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Alert, Image } from 'react-native';
 
 import styles from './LoginScreen.styles';
 import { requestLoginPermissions } from '../bluetooth/Permissions';
@@ -22,12 +17,10 @@ export default function LoginScreen({ onEnter }: Props) {
       return;
     }
     setRequesting(true);
-    try {setMessage('We need a few permissions to set up Child Safety.');
+    try {
+      setMessage('We need a few permissions to set up Child Safety.');
 
-      const {
-        location,
-        nearbyDevices,
-      } = await requestLoginPermissions();
+      const { location, nearbyDevices } = await requestLoginPermissions();
 
       console.log('PERMISSIONS:', {
         location,
@@ -39,7 +32,9 @@ export default function LoginScreen({ onEnter }: Props) {
       // ------------------------------------------
 
       if (!location || !nearbyDevices) {
-        setMessage('Location and Nearby Devices permissions are required to continue.');
+        setMessage(
+          'Location and Nearby Devices permissions are required to continue.',
+        );
 
         Alert.alert(
           'Permissions needed',
@@ -52,7 +47,9 @@ export default function LoginScreen({ onEnter }: Props) {
       // Permissions granted
       // ------------------------------------------
 
-      setMessage('Permissions granted!\n\nPlease make sure Bluetooth is turned on.');
+      setMessage(
+        'Permissions granted!\n\nPlease make sure Bluetooth is turned on.',
+      );
 
       Alert.alert(
         'Turn on Bluetooth',
@@ -68,7 +65,7 @@ export default function LoginScreen({ onEnter }: Props) {
         ],
       );
     } catch (error) {
-      console.log('PERMISSION REQUEST ERROR:',error);
+      console.log('PERMISSION REQUEST ERROR:', error);
       setMessage('Unable to request permissions. Please try again.');
 
       Alert.alert(
@@ -83,40 +80,31 @@ export default function LoginScreen({ onEnter }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
-        <Text
-          style={styles.logoEmoji}
-          accessibilityRole="image"
-        >
-          👶
+        <Text style={styles.logoEmoji} accessibilityRole="image">
+          <Image
+            source={require('../images/ic_launcher.png')}
+            style={styles.logoImage}
+          />
         </Text>
 
-        <Text style={styles.logoSubText}>
-          Child Safety
-        </Text>
+        <Text style={styles.logoSubText}>Child Safety</Text>
       </View>
 
       {message.length > 0 && (
         <View style={styles.permissionMessage}>
-          <Text style={styles.permissionMessageText}>
-            {message}
-          </Text>
+          <Text style={styles.permissionMessageText}>{message}</Text>
         </View>
       )}
 
       <TouchableOpacity
         accessible
         accessibilityLabel="Enter"
-        style={[
-          styles.button,
-          requesting && styles.buttonDisabled,
-        ]}
+        style={[styles.button, requesting && styles.buttonDisabled]}
         onPress={handleLogin}
         disabled={requesting}
       >
         <Text style={styles.buttonText}>
-          {requesting
-            ? 'Requesting permissions…'
-            : 'Enter'}
+          {requesting ? 'Requesting permissions…' : 'Enter'}
         </Text>
       </TouchableOpacity>
     </View>
