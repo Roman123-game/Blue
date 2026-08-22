@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   logoImage: {
-    width: 120,
-    height: 120,
+    width: 240,
+    height: 240,
     marginBottom: 12,
   }
 });
