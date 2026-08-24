@@ -9,7 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "debug": "node debug.js",
-    "android-install": "cd android && gradlew.bat assembleRelease && adb install -r app/build/outputs/apk/release/app-release.apk"
+    "android-install": "cd android && adb install -r app/build/outputs/apk/release/app-release.apk",
+     "android-build": "cd android && gradlew.bat assembleRelease"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.86.2",
