@@ -11,6 +11,7 @@ import CarTopView from '../components/CarTopView';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
 import createStyles from './HomeScreen.styles';
 import { useThemeColors } from '../theme';
+import ExitButton from '../components/ExitButton';
 
 interface Props {
   onBack?: () => void;
@@ -46,6 +47,8 @@ export default function HomeScreen({ onBack }: Props) {
 
   return (
     <View style={styles.container}>
+      <ExitButton />
+
       {!connectedDevice && devices.length === 0 && (
         <View style={styles.emptyState}>
           <Text style={styles.title}>Connect Device</Text>

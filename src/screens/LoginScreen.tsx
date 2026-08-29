@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Alert, Image } from 'react-native';
 
 import styles from './LoginScreen.styles';
 import { requestLoginPermissions } from '../bluetooth/Permissions';
+import ExitButton from '../components/ExitButton';
 
 interface Props {
   onEnter?: () => void;
@@ -79,6 +80,8 @@ export default function LoginScreen({ onEnter }: Props) {
 
   return (
     <View style={styles.container}>
+      <ExitButton />
+
       <View style={styles.logo}>
         {/* <Text style={styles.logoEmoji} accessibilityRole="image"> */}
           <Image
