@@ -39,7 +39,7 @@ export default function ExitButton() {
         style={[styles.xButton, { top: insets.top + 12 }]}
         onPress={() => setVisible(true)}
       >
-        <Text style={styles.xText}>×</Text>
+        <Text style={styles.xText}>⇩</Text>
       </TouchableOpacity>
 
       <Modal
@@ -65,7 +65,7 @@ export default function ExitButton() {
               </TouchableOpacity>
               <TouchableOpacity
                 accessible
-                accessibilityLabel="Leave"
+                accessibilityLabel="Minimize"
                 style={styles.leaveButton}
                 onPress={handleLeave}
               >
