@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import {
   BackHandler,
   Modal,
+  NativeModules,
   Platform,
   Text,
   TouchableOpacity,
@@ -13,8 +14,10 @@ import { useThemeColors } from '../theme';
 
 /**
  * X button shown on every level. Pressing it opens a popup asking the user
- * whether they want to leave or stay. Pressing "Leave" closes the app,
- * pressing "Stay" just dismisses the popup.
+ * whether they want to leave or stay. Pressing "Exit" completely closes the
+ * app on Android (via the AppExit native module, which removes the task from
+ * the recents screen and kills the process), while pressing "Stay" just
+ * dismisses the popup.
  */
 export default function ExitButton() {
   const [visible, setVisible] = useState(false);
@@ -24,9 +27,19 @@ export default function ExitButton() {
 
   const handleLeave = () => {
     setVisible(false);
-    // Android allows the app to be closed programmatically.
-    // iOS does not, so this gracefully does nothing there.
-    if (Platform.OS === 'android') {
+    // iOS does not allow the app to be closed programmatically, so this
+    // gracefully does nothing there.
+    if (Platform.OS !== 'android') {
+      return;
+    }
+    // The native AppExit module closes the app completely (finishAndRemoveTask
+    // + process kill). BackHandler.exitApp() only triggers the default back
+    // press, which on several launchers simply backgrounds ("minimizes") the
+    // app, so prefer the native module and keep exitApp as a fallback.
+    const AppExit = NativeModules.AppExit;
+    if (AppExit?.exitApp) {
+      AppExit.exitApp();
+    } else {
       BackHandler.exitApp();
     }
   };
@@ -39,7 +52,7 @@ export default function ExitButton() {
         style={[styles.xButton, { top: insets.top + 12 }]}
         onPress={() => setVisible(true)}
       >
-        <Text style={styles.xText}>🡇</Text>
+        <Text style={styles.xText}>✕</Text>
       </TouchableOpacity>
 
       <Modal
@@ -65,11 +78,11 @@ export default function ExitButton() {
               </TouchableOpacity>
               <TouchableOpacity
                 accessible
-                accessibilityLabel="Minimize"
+                accessibilityLabel="Exit"
                 style={styles.leaveButton}
                 onPress={handleLeave}
               >
-                <Text style={styles.leaveButtonText}>Leave</Text>
+                <Text style={styles.leaveButtonText}>Exit</Text>
               </TouchableOpacity>
             </View>
           </View>
