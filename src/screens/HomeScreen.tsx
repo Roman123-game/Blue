@@ -111,11 +111,11 @@ export default function HomeScreen({ onBack }: Props) {
                   />
                 )}
               />
-              {onBack && (
+              {/* {onBack && (
                 <TouchableOpacity style={styles.button} onPress={onBack}>
                   <Text style={styles.buttonText}>Back</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </>
           )}
         </>

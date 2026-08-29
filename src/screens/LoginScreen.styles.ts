@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 
-  logoEmoji: {
-    fontSize: 64,
-    marginBottom: 10,
-  },
+  // logoEmoji: {
+  //   fontSize: 64,
+  //   marginBottom: 10,
+  // },
 
   logoSubText: {
     color: "#ffffff",
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
     marginBottom: 12,
+     borderRadius: 25,
   }
 });
 

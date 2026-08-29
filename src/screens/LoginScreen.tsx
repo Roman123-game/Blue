@@ -80,12 +80,12 @@ export default function LoginScreen({ onEnter }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
-        <Text style={styles.logoEmoji} accessibilityRole="image">
+        {/* <Text style={styles.logoEmoji} accessibilityRole="image"> */}
           <Image
             source={require('../images/ic_launcher.png')}
             style={styles.logoImage}
           />
-        </Text>
+        {/* </Text> */}
 
         <Text style={styles.logoSubText}>Child Safety</Text>
       </View>
