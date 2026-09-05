@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Easing, View } from "react-native";
 
 import styles from "./CarTopView.styles";
 import DraggableDot from "./DraggableDot";
@@ -37,6 +37,40 @@ export default function CarTopView({
 
 
   const [dotPosition, setDotPosition] = useState<Point>(carPosition);
+  const innerRingOpacity = useRef(new Animated.Value(0.35)).current;
+  const secondRingOpacity = useRef(new Animated.Value(0.35)).current;
+  const middleRingOpacity = useRef(new Animated.Value(0.35)).current;
+  const outerRingOpacity = useRef(new Animated.Value(0.35)).current;
+
+  useEffect(() => {
+    const pulseRing = (opacity: Animated.Value) => Animated.sequence([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 180,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0.35,
+        duration: 320,
+        easing: Easing.inOut(Easing.quad),
+        useNativeDriver: true,
+      }),
+    ]);
+
+    const pulse = Animated.loop(
+      Animated.sequence([
+        pulseRing(innerRingOpacity),
+        pulseRing(secondRingOpacity),
+        pulseRing(middleRingOpacity),
+        pulseRing(outerRingOpacity),
+      ]),
+    );
+
+    pulse.start();
+
+    return () => pulse.stop();
+  }, [innerRingOpacity, secondRingOpacity, middleRingOpacity, outerRingOpacity]);
 
   const distanceMeters = rssi === null || rssi === undefined ? 0 : rssiToDistance(rssi);
 
@@ -65,7 +99,23 @@ export default function CarTopView({
     >
 
       {/* Radar Outer Ring */}
-      <View
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.fill,
+          {
+            width: radarSize,
+            height: radarSize,
+            borderRadius: radarSize / 2,
+            borderWidth: radarSize * 0.125,
+            opacity: outerRingOpacity.interpolate({
+              inputRange: [0.35, 1],
+              outputRange: [0, 0.22],
+            }),
+          },
+        ]}
+      />
+      <Animated.View
         style={[
           styles.ring,
           {
@@ -76,28 +126,87 @@ export default function CarTopView({
         ]}
       />
 
-
-      {/* Radar Middle Ring */}
-      <View
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.fill,
+          {
+            width: radarSize * 0.75,
+            height: radarSize * 0.75,
+            borderRadius: radarSize * 0.375,
+            borderWidth: radarSize * 0.125,
+            opacity: middleRingOpacity.interpolate({
+              inputRange: [0.35, 1],
+              outputRange: [0, 0.22],
+            }),
+          },
+        ]}
+      />
+      <Animated.View
         style={[
           styles.ring,
           {
-            width: radarSize * 0.7,
-            height: radarSize * 0.7,
-            borderRadius: radarSize * 0.35,
+            width: radarSize * 0.75,
+            height: radarSize * 0.75,
+            borderRadius: radarSize * 0.375,
+          },
+        ]}
+      />
+
+
+      {/* Radar Middle Ring */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.fill,
+          {
+            width: radarSize * 0.5,
+            height: radarSize * 0.5,
+            borderRadius: radarSize * 0.25,
+            borderWidth: radarSize * 0.125,
+            opacity: secondRingOpacity.interpolate({
+              inputRange: [0.35, 1],
+              outputRange: [0, 0.22],
+            }),
+          },
+        ]}
+      />
+      <Animated.View
+        style={[
+          styles.ring,
+          {
+            width: radarSize * 0.5,
+            height: radarSize * 0.5,
+            borderRadius: radarSize * 0.25,
           },
         ]}
       />
 
 
       {/* Radar Inner Ring */}
-      <View
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.fill,
+          styles.innerFill,
+          {
+            width: radarSize * 0.25,
+            height: radarSize * 0.25,
+            borderRadius: radarSize * 0.125,
+            opacity: innerRingOpacity.interpolate({
+              inputRange: [0.35, 1],
+              outputRange: [0, 0.22],
+            }),
+          },
+        ]}
+      />
+      <Animated.View
         style={[
           styles.ring,
           {
-            width: radarSize * 0.4,
-            height: radarSize * 0.4,
-            borderRadius: radarSize * 0.2,
+            width: radarSize * 0.25,
+            height: radarSize * 0.25,
+            borderRadius: radarSize * 0.125,
           },
         ]}
       />

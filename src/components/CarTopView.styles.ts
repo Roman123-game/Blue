@@ -16,6 +16,20 @@ const styles = StyleSheet.create({
   },
 
 
+  fill:{
+    position:"absolute",
+    borderWidth:10,
+    borderColor:"#9dffd0",
+    backgroundColor:"transparent",
+  },
+
+
+  innerFill:{
+    borderWidth:0,
+    backgroundColor:"#9dffd0",
+  },
+
+
   car:{
     backgroundColor:"#1976d2",
     position:"absolute",
