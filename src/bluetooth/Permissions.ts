@@ -85,6 +85,18 @@ export async function requestLoginPermissions(): Promise<LoginPermissionsResult>
     );
   }
 
+  if (Platform.Version >= 33) {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      {
+        title: 'Notification Permission',
+        message: 'Notifications are used to warn you when the device is too far away.',
+        buttonPositive: 'Allow',
+        buttonNegative: 'Deny',
+      },
+    );
+  }
+
   return {
     location,
     nearbyDevices,

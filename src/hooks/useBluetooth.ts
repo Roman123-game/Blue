@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { Device } from 'react-native-ble-plx';
+import { NativeModules, Platform } from 'react-native';
 import { Buffer } from 'buffer';
 import BluetoothService from '../bluetooth/BluetoothService';
 import { SCAN_TIME } from '../bluetooth/constants';
+import { rssiToDistance } from '../utils/rssiToDistance';
 
 const RSSI_SMOOTHING_WINDOW = 8;
 const RSSI_REFRESH_INTERVAL = 1000;
 const BATTERY_REFRESH_INTERVAL = 30000;
 const BATTERY_SERVICE_UUID ='0000180f-0000-1000-8000-00805f9b34fb';
 const BATTERY_LEVEL_UUID ='00002a19-0000-1000-8000-00805f9b34fb';
+const { BackgroundMonitor } = NativeModules;
 
 export default function useBluetooth() {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -216,6 +219,9 @@ export default function useBluetooth() {
     setBattery(null);
     clearRssiInterval();
     clearBatteryInterval();
+    if (Platform.OS === 'android') {
+      BackgroundMonitor?.stop();
+    }
   };
   // --------------------------------------------------
   // CONNECTED DEVICE MONITORING
@@ -250,6 +256,11 @@ export default function useBluetooth() {
       }
     };
     readInitialBattery();
+    if (Platform.OS === 'android') {
+      BackgroundMonitor?.start(
+        connectedDevice.name || connectedDevice.localName || 'Bluetooth device',
+      );
+    }
     // ------------------------------------------------
     // RSSI
     // ------------------------------------------------
@@ -261,6 +272,10 @@ export default function useBluetooth() {
           addRssiSample(
             updatedDevice.rssi ?? null,
           );
+          if (Platform.OS === 'android' && updatedDevice.rssi !== null) {
+            const distance = rssiToDistance(updatedDevice.rssi);
+            BackgroundMonitor?.updateDistance(distance);
+          }
           setConnectedDevice(
             updatedDevice,
           );
@@ -303,6 +318,9 @@ export default function useBluetooth() {
       clearRssiInterval();
       clearBatteryInterval();
       BluetoothService.stopScan();
+      if (Platform.OS === 'android') {
+        BackgroundMonitor?.stop();
+      }
     };
   }, []);
   // --------------------------------------------------
