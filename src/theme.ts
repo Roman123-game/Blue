@@ -2,38 +2,53 @@ import { useColorScheme } from 'react-native';
 
 export interface ThemeColors {
   background: string;
+  backgroundAccent: string;
   surface: string;
   surfaceBorder: string;
+  surfaceElevated: string;
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
   buttonBg: string;
   buttonText: string;
+  accent: string;
+  accentSoft: string;
+  danger: string;
   gaugeCard: string;
 }
 
 export const lightColors: ThemeColors = {
-  background: '#ffffff',
+  background: '#f4f7f5',
+  backgroundAccent: '#e5f0eb',
   surface: '#ffffff',
-  surfaceBorder: '#e1e4ee',
-  textPrimary: '#1f2b4d',
-  textSecondary: '#4b5b8a',
-  textMuted: '#8188a3',
-  buttonBg: '#e1e4ee',
-  buttonText: '#1f2b4d',
-  gaugeCard: '#f2f4ff',
+  surfaceBorder: '#d8e4de',
+  surfaceElevated: '#fbfdfc',
+  textPrimary: '#12251d',
+  textSecondary: '#4b655b',
+  textMuted: '#81948b',
+  buttonBg: '#dcebe4',
+  buttonText: '#173b2b',
+  accent: '#0e8f62',
+  accentSoft: '#bfe9d5',
+  danger: '#c94b4b',
+  gaugeCard: '#e8f5ee',
 };
 
 export const darkColors: ThemeColors = {
-  background: '#121a2b',
-  surface: '#1b2437',
-  surfaceBorder: '#2b3650',
-  textPrimary: '#e8ecf7',
-  textSecondary: '#aab4cf',
-  textMuted: '#7885a6',
-  buttonBg: '#2b3650',
-  buttonText: '#e8ecf7',
-  gaugeCard: '#1b2437',
+  background: '#0c1713',
+  backgroundAccent: '#10271e',
+  surface: '#14231d',
+  surfaceBorder: '#294237',
+  surfaceElevated: '#192d25',
+  textPrimary: '#eef8f2',
+  textSecondary: '#a9c2b5',
+  textMuted: '#718d7e',
+  buttonBg: '#234436',
+  buttonText: '#e5f6eb',
+  accent: '#5de0a4',
+  accentSoft: '#2c7355',
+  danger: '#ee7770',
+  gaugeCard: '#18372a',
 };
 
 export function useThemeColors(): ThemeColors {

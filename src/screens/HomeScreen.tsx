@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import useBluetooth from "../hooks/useBluetooth";
 import ScanButton from '../components/ScanButton';
 import DeviceCard from '../components/DeviceCard';
@@ -17,7 +17,7 @@ interface Props {
   onBack?: () => void;
 }
 
-export default function HomeScreen({ onBack }: Props) {
+export default function HomeScreen({ onBack: _onBack }: Props) {
   const {
     devices,
     scanning,
@@ -51,19 +51,24 @@ export default function HomeScreen({ onBack }: Props) {
 
       {!connectedDevice && devices.length === 0 && (
         <View style={styles.emptyState}>
-          <Text style={styles.title}>Connect Device</Text>
+          <Text style={styles.eyebrow}>VEHICLE MONITOR</Text>
+          <Text style={styles.title}>Connect your vehicle</Text>
+          <Text style={styles.emptyMessage}>
+            Pair a Bluetooth device to start monitoring its proximity.
+          </Text>
           <ScanButton scanning={scanning} onPress={scanDevices} />
         </View>
       )}
       {connectedDevice ? (
         <View style={styles.connectedContainer}>
           <View style={styles.headerRow}>
-            <View style={styles.nameRow}>
-              <ConnectionStatus connected={connectionStatus} />
+            <View>
+              <Text style={styles.eyebrow}>LIVE VEHICLE STATUS</Text>
               <Text style={styles.name}>
                 {connectedDevice.name || connectedDevice.localName || 'Unknown Device'}
               </Text>
             </View>
+            <ConnectionStatus connected={connectionStatus} />
           </View>
 
           <View style={styles.infoRow}>
@@ -74,21 +79,21 @@ export default function HomeScreen({ onBack }: Props) {
             <View style={styles.separator} />
 
             <View style={styles.batteryWrap}>
-              <BatteryIndicator battery={battery} style={{ marginTop: 0 }} />
+              <BatteryIndicator battery={battery} />
             </View>
           </View>
 
           <View style={styles.carWrap}>
             <View style={styles.gaugeCard}>
-              <Text style={styles.gaugeLabel}>Distance Gauge</Text>
-              <Text style={styles.gaugeValue}>
-                {distanceMeters === null ? 'Calculating…' : `${distanceMeters.toFixed(2)} m`}
-              </Text>
+              <Text style={styles.gaugeLabel}>ESTIMATED DISTANCE</Text>
+              <View style={styles.gaugeValueRow}>
+                <Text style={styles.gaugeValue}>
+                  {distanceMeters === null ? 'Calculating...' : distanceMeters.toFixed(2)}
+                </Text>
+                <Text style={styles.gaugeUnit}>m</Text>
+              </View>
               <Text style={styles.gaugeSubValue}>
-                {distanceFeet === null ? '' : `${distanceFeet.toFixed(2)} ft`}
-              </Text>
-              <Text style={styles.distanceLabel}>
-                Estimated distance
+                {distanceFeet === null ? 'Waiting for signal' : `${distanceFeet.toFixed(2)} ft away`}
               </Text>
             </View>
             <CarTopView rssi={rssi} />
@@ -102,6 +107,7 @@ export default function HomeScreen({ onBack }: Props) {
         <>
           {devices.length > 0 && (
             <>
+              <Text style={styles.eyebrow}>NEARBY DEVICES</Text>
               <Text style={styles.subtitle}>Devices</Text>
               <FlatList
                 data={devices}
@@ -109,7 +115,7 @@ export default function HomeScreen({ onBack }: Props) {
                 renderItem={({ item }) => (
                   <DeviceCard
                     device={item}
-                    connected={connectedDevice?.id === item.id}
+                    connected={false}
                     onConnect={connect}
                   />
                 )}

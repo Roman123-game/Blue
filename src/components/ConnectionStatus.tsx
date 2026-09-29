@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ export default function ConnectionStatus({
 connected
 }:Props){
 const colors = useThemeColors();
+const styles = useMemo(() => createStyles(colors), [colors]);
 return (
 <View style={styles.container}>
 <View
@@ -21,9 +22,9 @@ styles.dot,
 backgroundColor:
 connected
 ?
-"#22c55e"
+colors.accent
 :
-"#ef4444"
+colors.danger
 }
 ]}
 />
@@ -39,21 +40,26 @@ connected
 </View>
 );
 }
-const styles =
-StyleSheet.create({
+const createStyles = (colors: ReturnType<typeof useThemeColors>) => StyleSheet.create({
 container:{
 flexDirection:"row",
 alignItems:"center",
-marginVertical:10
+paddingHorizontal:10,
+paddingVertical:7,
+borderRadius:20,
+backgroundColor: colors.surfaceElevated,
+borderWidth: 1,
+borderColor: colors.surfaceBorder,
 },
 dot:{
-width:12,
-height:12,
-borderRadius:6,
-marginRight:8
+width:8,
+height:8,
+borderRadius:4,
+marginRight:7
 },
 text:{
-fontSize:16,
-fontWeight:"600"
+fontSize:12,
+fontWeight:"800",
+color: colors.textPrimary,
 }
 });

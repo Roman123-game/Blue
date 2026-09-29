@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   ring:{
     position:"absolute",
     borderWidth:2,
-    borderColor:"#00ff88",
+    borderColor:"#49d596",
     opacity:0.35,
   },
 
@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
   fill:{
     position:"absolute",
     borderWidth:10,
-    borderColor:"#9dffd0",
+    borderColor:"#8be9bd",
     backgroundColor:"transparent",
   },
 
 
   innerFill:{
     borderWidth:0,
-    backgroundColor:"#9dffd0",
+    backgroundColor:"#8be9bd",
   },
 
 
