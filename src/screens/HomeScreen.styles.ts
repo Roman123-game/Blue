@@ -38,7 +38,9 @@ export default (c: ThemeColors) =>
       alignItems: "center",
     },
     gaugeCard: {
-      marginTop: 10,
+      position: "absolute",
+      bottom: 0,
+      alignSelf: "center",
       paddingHorizontal: 20,
       paddingVertical: 15,
       borderRadius: 16,
@@ -95,9 +97,20 @@ export default (c: ThemeColors) =>
     },
     headerRow: {
       flexDirection: "row",
-      justifyContent: "space-between",
       alignItems: "center",
-      paddingBottom: 18,
+      paddingBottom: 6,
+    },
+    headerContent: {
+      flex: 1,
+      minWidth: 0,
+    },
+    statusHeaderRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "100%",
+      flexWrap: "nowrap",
+      gap: 12,
     },
     nameRow: {
       flexDirection: "row",
@@ -132,6 +145,7 @@ export default (c: ThemeColors) =>
     },
     carWrap: {
       flex: 1,
+      position: "relative",
       justifyContent: "center",
       alignItems: "center",
       paddingVertical: 12,

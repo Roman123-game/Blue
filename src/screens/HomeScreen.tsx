@@ -62,13 +62,15 @@ export default function HomeScreen({ onBack: _onBack }: Props) {
       {connectedDevice ? (
         <View style={styles.connectedContainer}>
           <View style={styles.headerRow}>
-            <View>
-              <Text style={styles.eyebrow}>LIVE VEHICLE STATUS</Text>
+            <View style={styles.headerContent}>
+              <View style={styles.statusHeaderRow}>
+                <Text style={styles.eyebrow}>Live sensor status</Text>
+                <ConnectionStatus connected={connectionStatus} />
+              </View>
               <Text style={styles.name}>
                 {connectedDevice.name || connectedDevice.localName || 'Unknown Device'}
               </Text>
             </View>
-            <ConnectionStatus connected={connectionStatus} />
           </View>
 
           <View style={styles.infoRow}>
@@ -84,6 +86,7 @@ export default function HomeScreen({ onBack: _onBack }: Props) {
           </View>
 
           <View style={styles.carWrap}>
+            <CarTopView rssi={rssi} />
             <View style={styles.gaugeCard}>
               <Text style={styles.gaugeLabel}>ESTIMATED DISTANCE</Text>
               <View style={styles.gaugeValueRow}>
@@ -96,7 +99,6 @@ export default function HomeScreen({ onBack: _onBack }: Props) {
                 {distanceFeet === null ? 'Waiting for signal' : `${distanceFeet.toFixed(2)} ft away`}
               </Text>
             </View>
-            <CarTopView rssi={rssi} />
           </View>
 
           <View style={styles.bottomRow}>

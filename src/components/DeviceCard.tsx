@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import createStyles from './DeviceCard.styles';
 import { useThemeColors } from '../theme';
 import { Device } from 'react-native-ble-plx';
@@ -81,11 +81,19 @@ export default function DeviceCard({ device, onConnect, connected }: Props) {
         Services:
         {(device.serviceUUIDs || []).join(',') || 'None'}
       </Text>
-      <Button
-        title={connected ? 'Connected' : 'Connect'}
+      <TouchableOpacity
+        accessible
+        accessibilityRole="button"
+        accessibilityLabel={connected ? 'Connected' : `Connect to ${name}`}
+        accessibilityState={{ disabled: connected }}
+        style={[styles.connectButton, connected && styles.connectButtonDisabled]}
         disabled={connected}
         onPress={() => onConnect(device)}
-      />
+      >
+        <Text style={[styles.connectButtonText, connected && styles.connectButtonTextDisabled]}>
+          {connected ? 'Connected' : 'Connect'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
