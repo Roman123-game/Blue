@@ -52,7 +52,7 @@ export default function HomeScreen({ onBack: _onBack }: Props) {
       {!connectedDevice && devices.length === 0 && (
         <View style={styles.emptyState}>
           <Text style={styles.eyebrow}>VEHICLE MONITOR</Text>
-          <Text style={styles.title}>Connect your vehicle</Text>
+          <Text style={styles.title}>Connect your device</Text>
           <Text style={styles.emptyMessage}>
             Pair a Bluetooth device to start monitoring its proximity.
           </Text>
