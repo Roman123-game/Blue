@@ -7,7 +7,14 @@ import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 import useBluetooth from '../src/hooks/useBluetooth';
 
-jest.mock('../src/hooks/useBluetooth');
+jest.mock('../src/hooks/useBluetooth', () => jest.fn());
+jest.mock('@react-native-google-signin/google-signin', () => ({
+  GoogleSignin: {
+    configure: jest.fn(),
+    hasPlayServices: jest.fn(),
+    signIn: jest.fn(),
+  },
+}));
 
 const mockedUseBluetooth = useBluetooth as jest.MockedFunction<typeof useBluetooth>;
 

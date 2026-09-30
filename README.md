@@ -86,6 +86,10 @@ You've successfully run and modified your React Native App. :partying_face:
 
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
+## Google Sign-In setup
+
+Create OAuth client IDs for the Android package `com.bluetoothmonitor` and the iOS app in Google Cloud Console. Add the Android app's signing certificate SHA-1 fingerprint when creating its OAuth client. Set the web and iOS client IDs in `src/screens/LoginScreen.tsx` (`GOOGLE_WEB_CLIENT_ID` and `GOOGLE_IOS_CLIENT_ID`). For iOS, add the reversed iOS client ID as a URL scheme in the app target's URL Types. Rebuild the native app after configuring the IDs.
+
 # Learn More
 
 To learn more about React Native, take a look at the following resources:

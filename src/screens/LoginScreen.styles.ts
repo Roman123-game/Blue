@@ -44,11 +44,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  button: {
+  googleButton: {
     width: "90%",
     maxWidth: 400,
     height: 54,
-    borderRadius: 14,
+    borderRadius: 8,
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
+    borderColor: "#dadce0",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+  },
+
+  enterButton: {
+    width: "90%",
+    maxWidth: 400,
+    height: 54,
+    marginTop: 12,
+    borderRadius: 8,
     backgroundColor: "#3478f6",
     alignItems: "center",
     justifyContent: "center",
@@ -58,7 +73,19 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
 
-  buttonText: {
+  googleIcon: {
+    color: "#4285f4",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+
+  googleButtonText: {
+    color: "#202124",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  enterButtonText: {
     color: "#ffffff",
     fontSize: 18,
     fontWeight: "700",
