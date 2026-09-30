@@ -6,7 +6,7 @@ import styles from './LoginScreen.styles';
 import { requestLoginPermissions } from '../bluetooth/Permissions';
 import ExitButton from '../components/ExitButton';
 
-const GOOGLE_WEB_CLIENT_ID = '';
+const GOOGLE_WEB_CLIENT_ID = '156247509469-b033e4d2s55de7lir9bcvl3sk0oi46qp.apps.googleusercontent.com';
 const GOOGLE_IOS_CLIENT_ID = '';
 
 interface Props {
