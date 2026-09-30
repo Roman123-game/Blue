@@ -8,9 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "debug": "node debug.js",
+    "debug": "node wireless.js",
     "android-install": "cd android && adb install -r app/build/outputs/apk/release/app-release.apk",
-     "android-build": "cd android && gradlew.bat assembleRelease"
+    "android-build": "cd android && gradlew.bat assembleRelease"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.86.2",
