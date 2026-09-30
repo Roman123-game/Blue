@@ -50,14 +50,28 @@ describe('DistanceAlert', () => {
     jest.clearAllMocks();
   });
 
-  it('vibrates while the warning is active', () => {
+  it('vibrates when distance exceeds the default 3 meter limit', () => {
     let tree: renderer.ReactTestRenderer;
 
     renderer.act(() => {
-      tree = renderer.create(<DistanceAlert distanceMeters={3} limit={2} />);
+      tree = renderer.create(<DistanceAlert distanceMeters={3.1} />);
     });
 
     expect(mockedVibration.vibrate).toHaveBeenCalledWith([1000, 1000, 1000], true);
+
+    renderer.act(() => {
+      tree!.unmount();
+    });
+  });
+
+  it('does not vibrate at the default 3 meter limit', () => {
+    let tree: renderer.ReactTestRenderer;
+
+    renderer.act(() => {
+      tree = renderer.create(<DistanceAlert distanceMeters={3} />);
+    });
+
+    expect(mockedVibration.vibrate).not.toHaveBeenCalled();
 
     renderer.act(() => {
       tree!.unmount();

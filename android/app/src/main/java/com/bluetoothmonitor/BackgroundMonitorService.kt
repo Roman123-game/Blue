@@ -82,7 +82,7 @@ class BackgroundMonitorService : Service() {
       }
     }
 
-    private const val DISTANCE_LIMIT_METERS = 2.0
+    private const val DISTANCE_LIMIT_METERS = 3.0
     private var activeService: BackgroundMonitorService? = null
   }
 

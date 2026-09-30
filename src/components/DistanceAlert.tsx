@@ -17,7 +17,7 @@ interface Props {
 }
 export default function DistanceAlert({
   distanceMeters,
-  limit = 2,
+  limit = 3,
 }: Props) {
   const [dismissed, setDismissed] = useState(false);
   const scale = useRef(
