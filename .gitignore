@@ -76,3 +76,6 @@ yarn-error.log
 
 *.keystore
 *.jks
+
+# Google OAuth credential downloads
+client_secret_*.json
