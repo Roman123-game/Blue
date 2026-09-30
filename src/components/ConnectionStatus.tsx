@@ -22,7 +22,7 @@ styles.dot,
 backgroundColor:
 connected
 ?
-colors.accent
+colors.success
 :
 colors.danger
 }

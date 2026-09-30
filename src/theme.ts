@@ -13,6 +13,7 @@ export interface ThemeColors {
   buttonText: string;
   accent: string;
   accentSoft: string;
+  success: string;
   danger: string;
   gaugeCard: string;
 }
@@ -30,6 +31,7 @@ export const lightColors: ThemeColors = {
   buttonText: '#173b6b',
   accent: '#3478f6',
   accentSoft: '#bfd4ff',
+  success: '#16a34a',
   danger: '#c94b4b',
   gaugeCard: '#e8f1ff',
 };
@@ -47,6 +49,7 @@ export const darkColors: ThemeColors = {
   buttonText: '#e5efff',
   accent: '#3478f6',
   accentSoft: '#2c4f85',
+  success: '#4ade80',
   danger: '#ee7770',
   gaugeCard: '#18314e',
 };

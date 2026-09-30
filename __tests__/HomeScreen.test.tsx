@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import HomeScreen from '../src/screens/HomeScreen';
 import useBluetooth from '../src/hooks/useBluetooth';
+import { lightColors } from '../src/theme';
 
 jest.mock('../src/hooks/useBluetooth');
 
@@ -41,5 +42,11 @@ describe('HomeScreen', () => {
 
     expect(treeString).not.toContain('Bluetooth Monitor');
     expect(treeString).not.toContain('Scan Devices');
+  });
+
+  it('shows a green status light when a device is connected', () => {
+    const tree = renderer.create(<HomeScreen />).toJSON();
+
+    expect(JSON.stringify(tree)).toContain(lightColors.success);
   });
 });
