@@ -17,6 +17,12 @@ export default (c: ThemeColors) =>
       color: c.accent,
       marginBottom: 7,
     },
+    welcome: {
+      marginBottom: 12,
+      fontSize: 18,
+      fontWeight: "700",
+      color: c.textPrimary,
+    },
     title: {
       fontSize: 30,
       lineHeight: 36,

@@ -5,16 +5,20 @@ import LoginScreen from './src/screens/LoginScreen';
 
 export default function App() {
   const [entered, setEntered] = useState(false);
+  const [userName, setUserName] = useState<string>();
 
     if (entered) {return (
       <SafeAreaProvider>
-        <HomeScreen onBack={() => setEntered(false)} />
+        <HomeScreen onBack={() => setEntered(false)} userName={userName} />
       </SafeAreaProvider>
     );}
 
     return (
       <SafeAreaProvider>
-        <LoginScreen onEnter={() => setEntered(true)} />
+        <LoginScreen onEnter={name => {
+          setUserName(name);
+          setEntered(true);
+        }} />
       </SafeAreaProvider>
     );
   

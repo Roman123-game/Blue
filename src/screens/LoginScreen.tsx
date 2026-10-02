@@ -10,14 +10,14 @@ const GOOGLE_WEB_CLIENT_ID = '156247509469-b033e4d2s55de7lir9bcvl3sk0oi46qp.apps
 const GOOGLE_IOS_CLIENT_ID = '';
 
 interface Props {
-  onEnter?: () => void;
+  onEnter?: (userName?: string) => void;
 }
 
 export default function LoginScreen({ onEnter }: Props) {
   const [requesting, setRequesting] = useState(false);
   const [message, setMessage] = useState('');
 
-  const requestPermissionsAndContinue = async () => {
+  const requestPermissionsAndContinue = async (userName?: string) => {
     try {
       setMessage('We need a few permissions to set up Child Safety.');
 
@@ -45,7 +45,7 @@ export default function LoginScreen({ onEnter }: Props) {
             text: 'OK',
             onPress: () => {
               setMessage('');
-              onEnter?.();
+              onEnter?.(userName);
             },
           },
         ],
@@ -107,7 +107,9 @@ export default function LoginScreen({ onEnter }: Props) {
         return;
       }
 
-      await requestPermissionsAndContinue();
+      const userName =
+        signInResponse.data.user.givenName || signInResponse.data.user.name || undefined;
+      await requestPermissionsAndContinue(userName);
     } catch (error) {
       console.log('GOOGLE SIGN-IN ERROR:', error);
       setMessage('Unable to sign in with Google. Please try again.');

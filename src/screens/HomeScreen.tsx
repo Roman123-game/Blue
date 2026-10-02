@@ -15,9 +15,10 @@ import ExitButton from '../components/ExitButton';
 
 interface Props {
   onBack?: () => void;
+  userName?: string;
 }
 
-export default function HomeScreen({ onBack: _onBack }: Props) {
+export default function HomeScreen({ onBack: _onBack, userName }: Props) {
   const {
     devices,
     scanning,
@@ -48,6 +49,9 @@ export default function HomeScreen({ onBack: _onBack }: Props) {
   return (
     <View style={styles.container}>
       <ExitButton />
+      {userName ? (
+        <Text style={styles.welcome}>Welcome, {userName}!</Text>
+      ) : null}
 
       {!connectedDevice && devices.length === 0 && (
         <View style={styles.emptyState}>
