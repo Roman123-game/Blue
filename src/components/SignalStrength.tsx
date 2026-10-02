@@ -36,7 +36,7 @@ export default function SignalStrength({ rssi, inline = false }: Props) {
   if (inline) {
     return (
       <View style={styles.inlineContainer}>
-        <Text style={styles.inlineTitle}>Strength</Text>
+        <Text style={styles.inlineTitle}>Strength:</Text>
         <View style={styles.inlineInfoRow}>
           <Text style={styles.inlineValue}>{rssi === null ? 'N/A' : `${rssi} dBm`}</Text>
           <Text style={styles.inlineLabel}>{label}</Text>

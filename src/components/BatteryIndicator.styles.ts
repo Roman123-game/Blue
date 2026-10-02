@@ -8,12 +8,14 @@ export default (c: ThemeColors) =>
     },
 
     label: {
+      fontSize: 12,
+      fontWeight: '700',
       color: c.textSecondary,
     },
 
     value: {
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: '700',
       color: c.textPrimary,
     },
   });

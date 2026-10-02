@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { Text } from 'react-native';
 import HomeScreen from '../src/screens/HomeScreen';
 import useBluetooth from '../src/hooks/useBluetooth';
 import { lightColors } from '../src/theme';
@@ -39,6 +40,33 @@ describe('HomeScreen', () => {
     expect(batteryIndex).toBeGreaterThan(strengthIndex);
     expect(distanceIndex).toBeGreaterThan(batteryIndex);
     expect(treeString).toContain('m');
+  });
+
+  it('uses consistent typography for sensor labels and readings', () => {
+    const screen = renderer.create(<HomeScreen />);
+    const texts = screen.root.findAllByType(Text);
+    const findText = (content: string) =>
+      texts.find(text => text.props.children === content);
+    const labels = ['Strength', 'Battery:', 'ESTIMATED DISTANCE'].map(content =>
+      findText(content),
+    );
+
+    expect(labels.every(Boolean)).toBe(true);
+    labels.forEach(label => {
+      expect(label?.props.style).toMatchObject({
+        fontSize: 12,
+        fontWeight: '700',
+      });
+    });
+
+    expect(findText('-60 dBm')?.props.style).toMatchObject({
+      fontSize: 18,
+      fontWeight: '700',
+    });
+    expect(findText('50%')?.props.style).toMatchObject({
+      fontSize: 18,
+      fontWeight: '700',
+    });
   });
 
   it('hides the monitor title and scan button when a device is connected', () => {

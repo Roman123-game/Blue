@@ -8,7 +8,8 @@ export default (c: ThemeColors) =>
     },
 
     title: {
-      fontSize: 16,
+      fontSize: 12,
+      fontWeight: '700',
       color: c.textPrimary,
     },
 
@@ -32,35 +33,38 @@ export default (c: ThemeColors) =>
     },
 
     inlineTitle: {
-      fontSize: 13,
-      fontWeight: '600',
+      fontSize: 12,
+      fontWeight: '700',
       color: c.textSecondary,
     },
 
     inlineValue: {
-      fontSize: 14,
-      fontWeight: '600',
+      fontSize: 18,
+      fontWeight: '700',
       color: c.textPrimary,
     },
 
     inlineLabel: {
       fontSize: 12,
+      fontWeight: '600',
       color: c.textMuted,
     },
 
     bar: {
       width: 10,
-      backgroundColor: '#222',
+      backgroundColor: c.accent,
       borderRadius: 3,
     },
 
     value: {
-      fontSize: 20,
-      fontWeight: 'bold',
+      fontSize: 18,
+      fontWeight: '700',
       color: c.textPrimary,
     },
 
     label: {
+      fontSize: 12,
+      fontWeight: '600',
       color: c.textSecondary,
     },
   });
