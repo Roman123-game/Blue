@@ -77,10 +77,6 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             </View>
           </View>
 
-          <View style={styles.carWrap}>
-            <CarTopView rssi={rssi} />
-          </View>
-
           <View style={styles.infoRow}>
             <View style={styles.strengthWrap}>
               <SignalStrength rssi={rssi} inline />
@@ -106,6 +102,10 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
                 {distanceFeet === null ? 'Waiting for signal' : `${distanceFeet.toFixed(2)} ft away`}
               </Text>
             </View>
+          </View>
+
+          <View style={styles.carWrap}>
+            <CarTopView rssi={rssi} />
           </View>
 
           <View style={styles.bottomRow}>

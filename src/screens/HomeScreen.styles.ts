@@ -120,11 +120,11 @@ export default (c: ThemeColors) =>
       justifyContent: "space-between",
       marginTop: 0,
       borderWidth: 1,
-      borderColor: c.surfaceBorder,
+      borderColor: c.accentSoft,
       paddingHorizontal: 10,
       paddingVertical: 13,
       borderRadius: 14,
-      backgroundColor: c.surfaceElevated,
+      backgroundColor: c.gaugeCard,
     },
     strengthWrap: {
       flex: 1,
