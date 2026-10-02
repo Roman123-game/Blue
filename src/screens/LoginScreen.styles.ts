@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { ThemeColors } from "../theme";
 
-const styles = StyleSheet.create({
+export default (c: ThemeColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#080c18",
+    backgroundColor: c.background,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 24,
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   // },
 
   logoSubText: {
-    color: "#ffffff",
+    color: c.textPrimary,
     fontSize: 28,
     fontWeight: "700",
   },
@@ -32,13 +33,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 18,
     borderRadius: 14,
-    backgroundColor: "#1a2235",
+    backgroundColor: c.surface,
     borderWidth: 1,
-    borderColor: "#303b55",
+    borderColor: c.surfaceBorder,
   },
 
   permissionMessageText: {
-    color: "#ffffff",
+    color: c.textPrimary,
     fontSize: 16,
     lineHeight: 24,
     textAlign: "center",
@@ -49,9 +50,9 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     height: 54,
     borderRadius: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: c.surface,
     borderWidth: 1,
-    borderColor: "#dadce0",
+    borderColor: c.surfaceBorder,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     height: 54,
     marginTop: 12,
     borderRadius: 8,
-    backgroundColor: "#3478f6",
+    backgroundColor: c.accent,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -80,13 +81,13 @@ const styles = StyleSheet.create({
   },
 
   googleButtonText: {
-    color: "#202124",
+    color: c.textPrimary,
     fontSize: 16,
     fontWeight: "600",
   },
 
   enterButtonText: {
-    color: "#ffffff",
+    color: c.buttonText,
     fontSize: 18,
     fontWeight: "700",
   },
@@ -97,5 +98,3 @@ const styles = StyleSheet.create({
      borderRadius: 25,
   }
 });
-
-export default styles;

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, Image, Platform } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-import styles from './LoginScreen.styles';
+import createStyles from './LoginScreen.styles';
 import { requestLoginPermissions } from '../bluetooth/Permissions';
 import ExitButton from '../components/ExitButton';
+import { useThemeColors } from '../theme';
 
 const GOOGLE_WEB_CLIENT_ID = '156247509469-b033e4d2s55de7lir9bcvl3sk0oi46qp.apps.googleusercontent.com';
 const GOOGLE_IOS_CLIENT_ID = '';
@@ -16,6 +17,8 @@ interface Props {
 export default function LoginScreen({ onEnter }: Props) {
   const [requesting, setRequesting] = useState(false);
   const [message, setMessage] = useState('');
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const requestPermissionsAndContinue = async (userName?: string) => {
     try {
