@@ -27,13 +27,18 @@ describe('HomeScreen', () => {
     } as any);
   });
 
-  it('renders the distance gauge near the top of the home screen', () => {
+  it('renders distance with signal strength and battery details at the bottom', () => {
     const tree = renderer.create(<HomeScreen />).toJSON();
 
     const treeString = JSON.stringify(tree);
-    expect(treeString).toContain('Distance Gauge');
+    const strengthIndex = treeString.indexOf('Strength');
+    const batteryIndex = treeString.indexOf('Battery:');
+    const distanceIndex = treeString.indexOf('ESTIMATED DISTANCE');
+
+    expect(strengthIndex).toBeGreaterThan(-1);
+    expect(batteryIndex).toBeGreaterThan(strengthIndex);
+    expect(distanceIndex).toBeGreaterThan(batteryIndex);
     expect(treeString).toContain('m');
-    expect(treeString).not.toContain('%');
   });
 
   it('hides the monitor title and scan button when a device is connected', () => {

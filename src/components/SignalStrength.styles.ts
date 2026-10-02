@@ -26,27 +26,25 @@ export default (c: ThemeColors) =>
     },
 
     inlineInfoRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
       marginTop: 2,
     },
 
     inlineTitle: {
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: '600',
-      marginRight: 8,
       color: c.textSecondary,
     },
 
     inlineValue: {
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: '600',
-      marginRight: 8,
       color: c.textPrimary,
     },
 
     inlineLabel: {
-      fontSize: 14,
+      fontSize: 12,
       color: c.textMuted,
     },
 

@@ -77,6 +77,10 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             </View>
           </View>
 
+          <View style={styles.carWrap}>
+            <CarTopView rssi={rssi} />
+          </View>
+
           <View style={styles.infoRow}>
             <View style={styles.strengthWrap}>
               <SignalStrength rssi={rssi} inline />
@@ -85,13 +89,12 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             <View style={styles.separator} />
 
             <View style={styles.batteryWrap}>
-              <BatteryIndicator battery={battery} />
+              <BatteryIndicator battery={battery} style={styles.metricColumn} />
             </View>
-          </View>
 
-          <View style={styles.carWrap}>
-            <CarTopView rssi={rssi} />
-            <View style={styles.gaugeCard}>
+            <View style={styles.separator} />
+
+            <View style={styles.distanceWrap}>
               <Text style={styles.gaugeLabel}>ESTIMATED DISTANCE</Text>
               <View style={styles.gaugeValueRow}>
                 <Text style={styles.gaugeValue}>
