@@ -91,7 +91,7 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             <View style={styles.separator} />
 
             <View style={styles.distanceWrap}>
-              <Text style={styles.gaugeLabel}>Estimated Distance</Text>
+              <Text style={styles.gaugeLabel}>Distance:</Text>
               <View style={styles.gaugeValueRow}>
                 <Text style={styles.gaugeValue}>
                   {distanceMeters === null ? 'Calculating...' : distanceMeters.toFixed(2)}

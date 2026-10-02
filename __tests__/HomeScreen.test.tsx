@@ -34,7 +34,7 @@ describe('HomeScreen', () => {
     const treeString = JSON.stringify(tree);
     const strengthIndex = treeString.indexOf('Strength');
     const batteryIndex = treeString.indexOf('Battery:');
-    const distanceIndex = treeString.indexOf('ESTIMATED DISTANCE');
+    const distanceIndex = treeString.indexOf('Distance');
 
     expect(strengthIndex).toBeGreaterThan(-1);
     expect(batteryIndex).toBeGreaterThan(strengthIndex);
@@ -47,7 +47,7 @@ describe('HomeScreen', () => {
     const texts = screen.root.findAllByType(Text);
     const findText = (content: string) =>
       texts.find(text => text.props.children === content);
-    const labels = ['Strength', 'Battery:', 'ESTIMATED DISTANCE'].map(content =>
+    const labels = ['Strength', 'Battery:', 'Distance'].map(content =>
       findText(content),
     );
 
