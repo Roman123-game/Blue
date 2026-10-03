@@ -13,11 +13,9 @@ import createStyles from './ExitButton.styles';
 import { useThemeColors } from '../theme';
 
 /**
- * X button shown on every level. Pressing it opens a popup asking the user
- * whether they want to leave or stay. Pressing "Exit" completely closes the
- * app on Android (via the AppExit native module, which removes the task from
- * the recents screen and kills the process), while pressing "Stay" just
- * dismisses the popup.
+ * X button for screens that offer an explicit app-exit control. Pressing it
+ * opens a popup asking the user whether they want to leave or stay. Pressing
+ * "Exit" closes the app on Android, while pressing "Stay" dismisses the popup.
  */
 export default function ExitButton() {
   const [visible, setVisible] = useState(false);

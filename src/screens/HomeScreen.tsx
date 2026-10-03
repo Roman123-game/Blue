@@ -102,9 +102,11 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             </View>
           </View>
 
-          <View style={styles.carWrap}>
-            <CarTopView rssi={rssi} />
-          </View>
+          {distanceMeters !== null && distanceMeters >= 3 && (
+            <View style={styles.carWrap}>
+              <CarTopView rssi={rssi} />
+            </View>
+          )}
 
           <View style={styles.bottomRow}>
             <DisconnectButton onPress={disconnect} />

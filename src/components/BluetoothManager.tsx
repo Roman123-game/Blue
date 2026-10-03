@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import RNBluetoothClassic from 'react-native-bluetooth-classic';
 import styles from './BluetoothManager.styles';
+import ExitButton from './ExitButton';
 type Device = {
   name: string;
   address: string;
@@ -79,6 +80,7 @@ export default function BluetoothManager({ onBack }: Props) {
   }
   return (
     <View style={styles.container}>
+      <ExitButton />
       {onBack && (
         <TouchableOpacity style={styles.button} onPress={onBack}>
           <Text style={styles.buttonText}>Back</Text>

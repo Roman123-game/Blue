@@ -72,6 +72,21 @@ describe('DistanceAlert', () => {
     });
 
     expect(mockedVibration.vibrate).not.toHaveBeenCalled();
+    expect(tree!.toJSON()).toBeNull();
+
+    renderer.act(() => {
+      tree!.unmount();
+    });
+  });
+
+  it('does not vibrate when distance is less than 3 meters', () => {
+    let tree: renderer.ReactTestRenderer;
+
+    renderer.act(() => {
+      tree = renderer.create(<DistanceAlert distanceMeters={2.99} />);
+    });
+
+    expect(mockedVibration.vibrate).not.toHaveBeenCalled();
 
     renderer.act(() => {
       tree!.unmount();

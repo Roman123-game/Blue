@@ -15,7 +15,10 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
 jest.mock('../src/bluetooth/Permissions', () => ({
   requestLoginPermissions: jest.fn(),
 }));
-jest.mock('../src/components/ExitButton', () => () => null);
+jest.mock('../src/components/ExitButton', () => () => {
+  const ReactLib = require('react');
+  return ReactLib.createElement('ExitButton', { accessibilityLabel: 'Exit app' });
+});
 
 test('renders Google sign-in and the previous Enter action', async () => {
   let screen: ReactTestRenderer.ReactTestRenderer;
@@ -25,6 +28,7 @@ test('renders Google sign-in and the previous Enter action', async () => {
   const renderedScreen = JSON.stringify(screen!.toJSON());
   expect(renderedScreen).toContain('Continue with Google');
   expect(renderedScreen).toContain('Enter');
+  expect(screen!.root.findAllByProps({ accessibilityLabel: 'Exit app' })).toHaveLength(1);
 });
 
 test('Enter starts the existing permission flow without Google sign-in', async () => {
