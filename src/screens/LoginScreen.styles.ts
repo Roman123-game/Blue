@@ -87,7 +87,7 @@ export default (c: ThemeColors) => StyleSheet.create({
   },
 
   enterButtonText: {
-    color: "#ffffff",
+    color: c.surface,
     fontSize: 18,
     fontWeight: "700",
   },
