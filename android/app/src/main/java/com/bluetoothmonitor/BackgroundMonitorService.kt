@@ -30,25 +30,56 @@ class BackgroundMonitorService : Service() {
   }
 
   private fun notification(message: String): Notification =
-    NotificationCompat.Builder(this, CHANNEL_ID)
+    NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
       .setSmallIcon(android.R.drawable.ic_dialog_info)
       .setContentTitle("Bluetooth distance monitor")
       .setContentText(message)
       .setOngoing(true)
       .setCategory(NotificationCompat.CATEGORY_SERVICE)
+      .setPriority(NotificationCompat.PRIORITY_LOW)
+      .build()
+
+  private fun alertNotification(message: String): Notification =
+    NotificationCompat.Builder(this, ALERT_CHANNEL_ID)
+      .setSmallIcon(android.R.drawable.ic_dialog_alert)
+      .setContentTitle("Bluetooth distance monitor")
+      .setContentText(message)
+      .setCategory(NotificationCompat.CATEGORY_ALARM)
       .setPriority(NotificationCompat.PRIORITY_HIGH)
+      .setDefaults(Notification.DEFAULT_SOUND)
+      .setOnlyAlertOnce(true)
       .build()
 
   private fun createNotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      val channel = NotificationChannel(
-        CHANNEL_ID,
+      val manager = getSystemService(NotificationManager::class.java)
+      val serviceChannel = NotificationChannel(
+        SERVICE_CHANNEL_ID,
         "Distance monitoring",
+        NotificationManager.IMPORTANCE_LOW,
+      )
+      serviceChannel.setSound(null, null)
+      serviceChannel.enableVibration(false)
+
+      val alertChannel = NotificationChannel(
+        ALERT_CHANNEL_ID,
+        "Distance alerts",
         NotificationManager.IMPORTANCE_HIGH,
       )
-      channel.enableVibration(true)
-      getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+      alertChannel.enableVibration(false)
+
+      manager.createNotificationChannel(serviceChannel)
+      manager.createNotificationChannel(alertChannel)
     }
+  }
+
+  private fun showAlertNotification(message: String) {
+    getSystemService(NotificationManager::class.java)
+      .notify(ALERT_NOTIFICATION_ID, alertNotification(message))
+  }
+
+  private fun clearAlertNotification() {
+    getSystemService(NotificationManager::class.java).cancel(ALERT_NOTIFICATION_ID)
   }
 
   private fun startAlarm() {
@@ -64,8 +95,10 @@ class BackgroundMonitorService : Service() {
 
   companion object {
     const val EXTRA_DEVICE_NAME = "deviceName"
-    private const val CHANNEL_ID = "distance-monitor"
+    private const val SERVICE_CHANNEL_ID = "distance-monitor-service"
+    private const val ALERT_CHANNEL_ID = "distance-monitor-alerts"
     private const val NOTIFICATION_ID = 1001
+    private const val ALERT_NOTIFICATION_ID = 1002
 
     fun updateDistance(context: Context, distanceMeters: Double) {
       val service = activeService ?: return
@@ -74,9 +107,10 @@ class BackgroundMonitorService : Service() {
         service.isDanger = danger
         if (danger) {
           service.startAlarm()
-          service.updateNotification("WARNING: device is ${"%.2f".format(distanceMeters)} m away")
+          service.showAlertNotification("WARNING: device is ${"%.2f".format(distanceMeters)} m away")
         } else {
           context.getSystemService(Vibrator::class.java)?.cancel()
+          service.clearAlertNotification()
           service.updateNotification("Monitoring ${service.deviceName}")
         }
       }
@@ -96,6 +130,7 @@ class BackgroundMonitorService : Service() {
   override fun onDestroy() {
     activeService = null
     getSystemService(Vibrator::class.java)?.cancel()
+    clearAlertNotification()
     super.onDestroy()
   }
 }

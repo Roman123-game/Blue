@@ -122,10 +122,10 @@ describe('HomeScreen', () => {
     expect(JSON.stringify(tree)).toContain(lightColors.success);
   });
 
-  it('does not show the radar monitor when distance is less than 3 meters', () => {
+  it('shows the radar monitor and car when distance is less than 3 meters', () => {
     const screen = renderHomeScreen();
 
-    expect(screen.root.findAllByType(CarTopView)).toHaveLength(0);
+    expect(screen.root.findAllByType(CarTopView)).toHaveLength(1);
   });
 
   it('shows the radar monitor when distance is at least 3 meters', () => {

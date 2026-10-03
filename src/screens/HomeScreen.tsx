@@ -105,7 +105,7 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             </View>
           </View>
 
-          {distanceMeters !== null && distanceMeters >= 3 && (
+          {distanceMeters !== null && (
             <View style={styles.carWrap}>
               <CarTopView rssi={rssi} />
             </View>
