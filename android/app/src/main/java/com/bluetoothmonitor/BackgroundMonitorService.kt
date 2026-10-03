@@ -6,15 +6,21 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import java.io.IOException
 
 class BackgroundMonitorService : Service() {
   private var deviceName = "Bluetooth device"
   private var isDanger = false
+  private var alarmPlayer: MediaPlayer? = null
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     deviceName = intent?.getStringExtra(EXTRA_DEVICE_NAME) ?: deviceName
@@ -83,17 +89,80 @@ class BackgroundMonitorService : Service() {
   }
 
   private fun startAlarm() {
-    val vibrator = getSystemService(Vibrator::class.java) ?: return
-    val pattern = longArrayOf(0, 800, 500)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0))
-    } else {
-      @Suppress("DEPRECATION")
-      vibrator.vibrate(pattern, 0)
+    getSystemService(Vibrator::class.java)?.let { vibrator ->
+      val pattern = longArrayOf(0, 800, 500)
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0))
+      } else {
+        @Suppress("DEPRECATION")
+        vibrator.vibrate(pattern, 0)
+      }
+    }
+
+    if (alarmPlayer != null) return
+
+    val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+    if (alarmUri == null) {
+      Log.e(TAG, "No default alarm sound is configured")
+      return
+    }
+
+    val player = MediaPlayer()
+    alarmPlayer = player
+    player.setAudioAttributes(
+      AudioAttributes.Builder()
+        .setUsage(AudioAttributes.USAGE_ALARM)
+        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+        .build(),
+    )
+    player.isLooping = true
+    player.setOnPreparedListener {
+      if (isDanger && alarmPlayer === it) {
+        it.start()
+      } else if (alarmPlayer === it) {
+        alarmPlayer = null
+        it.release()
+      }
+    }
+    player.setOnErrorListener { mediaPlayer, what, extra ->
+      Log.e(TAG, "Unable to play the distance alarm (what=$what, extra=$extra)")
+      if (alarmPlayer === mediaPlayer) {
+        alarmPlayer = null
+      }
+      mediaPlayer.release()
+      true
+    }
+
+    try {
+      player.setDataSource(this, alarmUri)
+      player.prepareAsync()
+    } catch (error: IOException) {
+      alarmPlayer = null
+      player.release()
+      Log.e(TAG, "Unable to load the distance alarm", error)
+    } catch (error: IllegalArgumentException) {
+      alarmPlayer = null
+      player.release()
+      Log.e(TAG, "Unable to load the distance alarm", error)
+    } catch (error: SecurityException) {
+      alarmPlayer = null
+      player.release()
+      Log.e(TAG, "Unable to load the distance alarm", error)
     }
   }
 
+  private fun stopAlarm() {
+    getSystemService(Vibrator::class.java)?.cancel()
+    alarmPlayer?.also { player ->
+      player.setOnPreparedListener(null)
+      player.setOnErrorListener(null)
+      player.release()
+    }
+    alarmPlayer = null
+  }
+
   companion object {
+    private const val TAG = "BackgroundMonitorService"
     const val EXTRA_DEVICE_NAME = "deviceName"
     private const val SERVICE_CHANNEL_ID = "distance-monitor-service"
     private const val ALERT_CHANNEL_ID = "distance-monitor-alerts"
@@ -109,7 +178,7 @@ class BackgroundMonitorService : Service() {
           service.startAlarm()
           service.showAlertNotification("WARNING: device is ${"%.2f".format(distanceMeters)} m away")
         } else {
-          context.getSystemService(Vibrator::class.java)?.cancel()
+          service.stopAlarm()
           service.clearAlertNotification()
           service.updateNotification("Monitoring ${service.deviceName}")
         }
@@ -129,7 +198,7 @@ class BackgroundMonitorService : Service() {
 
   override fun onDestroy() {
     activeService = null
-    getSystemService(Vibrator::class.java)?.cancel()
+    stopAlarm()
     clearAlertNotification()
     super.onDestroy()
   }
