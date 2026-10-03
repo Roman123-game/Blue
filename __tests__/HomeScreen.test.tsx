@@ -77,6 +77,12 @@ describe('HomeScreen', () => {
     expect(treeString).not.toContain('Scan Devices');
   });
 
+  it('does not render the exit button', () => {
+    const screen = renderer.create(<HomeScreen />);
+
+    expect(screen.root.findAllByProps({ accessibilityLabel: 'Exit app' })).toHaveLength(0);
+  });
+
   it('shows a green status light when a device is connected', () => {
     const tree = renderer.create(<HomeScreen />).toJSON();
 
