@@ -8,6 +8,7 @@ import BatteryIndicator from '../components/BatteryIndicator';
 import DisconnectButton from '../components/DisconnectButton';
 import ConnectionStatus from '../components/ConnectionStatus';
 import CarTopView from '../components/CarTopView';
+import ExitButton from '../components/ExitButton';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
 import createStyles from './HomeScreen.styles';
 import { useThemeColors } from '../theme';
@@ -47,6 +48,8 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
 
   return (
     <View style={styles.container}>
+      {!connectedDevice && <ExitButton />}
+
       {userName ? (
         <Text style={styles.welcome}>Welcome, {userName}!</Text>
       ) : null}

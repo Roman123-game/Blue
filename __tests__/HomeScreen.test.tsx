@@ -8,6 +8,9 @@ import { lightColors } from '../src/theme';
 
 jest.mock('../src/hooks/useBluetooth', () => jest.fn());
 jest.mock('../src/components/CarTopView', () => () => null);
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
+}));
 jest.mock('../src/theme', () => {
   const actual = jest.requireActual('../src/theme');
   return {
@@ -96,10 +99,21 @@ describe('HomeScreen', () => {
     expect(treeString).not.toContain('Scan Devices');
   });
 
-  it('does not render the exit button', () => {
+  it('does not render the exit button when a device is connected', () => {
     const screen = renderHomeScreen();
 
     expect(screen.root.findAllByProps({ accessibilityLabel: 'Exit app' })).toHaveLength(0);
+  });
+
+  it('renders the exit button while selecting a device', () => {
+    mockedUseBluetooth.mockReturnValue({
+      ...createBluetoothState(),
+      connectedDevice: null,
+    } as any);
+
+    const screen = renderHomeScreen();
+
+    expect(screen.root.findByProps({ accessibilityLabel: 'Exit app' })).toBeDefined();
   });
 
   it('shows a green status light when a device is connected', () => {
