@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from '../src/screens/HomeScreen';
 import CarTopView from '../src/components/CarTopView';
 import useBluetooth from '../src/hooks/useBluetooth';
@@ -64,12 +64,29 @@ describe('HomeScreen', () => {
     expect(treeString).toContain('m');
   });
 
+  it('shows an icon for each sensor gauge', () => {
+    const screen = renderHomeScreen();
+
+    ['signal', 'battery', 'distance'].forEach(name => {
+      const icon = screen.root.findByProps({ testID: `gauge-icon-${name}` });
+      const usesTextColor = icon.findAllByType(View).some(({ props }) => {
+        const style = StyleSheet.flatten(props.style);
+        return (
+          style?.backgroundColor === lightColors.textSecondary ||
+          style?.borderColor === lightColors.textSecondary
+        );
+      });
+
+      expect(usesTextColor).toBe(true);
+    });
+  });
+
   it('uses consistent typography for sensor labels and readings', () => {
     const screen = renderHomeScreen();
     const texts = screen.root.findAllByType(Text);
     const findText = (content: string) =>
       texts.find(text => text.props.children === content);
-    const labels = ['Strength', 'Battery:', 'Distance'].map(content =>
+    const labels = ['Strength:', 'Battery:', 'Distance:'].map(content =>
       findText(content),
     );
 

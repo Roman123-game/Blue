@@ -12,6 +12,7 @@ import ExitButton from '../components/ExitButton';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
 import createStyles from './HomeScreen.styles';
 import { useThemeColors } from '../theme';
+import GaugeIcon from '../components/GaugeIcon';
 
 interface Props {
   onBack?: () => void;
@@ -92,7 +93,14 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
             <View style={styles.separator} />
 
             <View style={styles.distanceWrap}>
-              <Text style={styles.gaugeLabel}>Distance:</Text>
+              <View style={styles.gaugeLabelRow}>
+                <GaugeIcon
+                  name="distance"
+                  color={colors.textSecondary}
+                  backgroundColor={colors.gaugeCard}
+                />
+                <Text style={styles.gaugeLabel}>Distance:</Text>
+              </View>
               <View style={styles.gaugeValueRow}>
                 <Text style={styles.gaugeValue}>
                   {distanceMeters === null ? 'Calculating...' : distanceMeters.toFixed(2)}

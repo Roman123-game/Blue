@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import createStyles from './SignalStrength.styles';
 import { useThemeColors } from '../theme';
+import GaugeIcon from './GaugeIcon';
 
 interface Props {
   rssi: number | null;
@@ -36,7 +37,14 @@ export default function SignalStrength({ rssi, inline = false }: Props) {
   if (inline) {
     return (
       <View style={styles.inlineContainer}>
-        <Text style={styles.inlineTitle}>Strength:</Text>
+        <View style={styles.inlineTitleRow}>
+          <GaugeIcon
+            name="signal"
+            color={colors.textSecondary}
+            backgroundColor={colors.gaugeCard}
+          />
+          <Text style={styles.inlineTitle}>Strength:</Text>
+        </View>
         <View style={styles.inlineInfoRow}>
           <Text style={styles.inlineValue}>{rssi === null ? 'N/A' : `${rssi} dBm`}</Text>
           <Text style={styles.inlineLabel}>{label}</Text>

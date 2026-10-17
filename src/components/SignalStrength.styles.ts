@@ -26,6 +26,11 @@ export default (c: ThemeColors) =>
       alignItems: 'flex-start',
     },
 
+    inlineTitleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+
     inlineInfoRow: {
       flexDirection: 'column',
       alignItems: 'flex-start',

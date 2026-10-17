@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text } from 'react-native';
 import createStyles from './BatteryIndicator.styles';
 import { useThemeColors } from '../theme';
+import GaugeIcon from './GaugeIcon';
 
 
 interface Props {
@@ -20,9 +21,14 @@ return (
 
 <View style={[styles.container, style]}>
 
-<Text style={styles.label}>
-Battery:
-</Text>
+<View style={styles.labelRow}>
+<GaugeIcon
+  name="battery"
+  color={colors.textSecondary}
+  backgroundColor={colors.gaugeCard}
+/>
+<Text style={styles.label}>Battery:</Text>
+</View>
 
 <Text style={styles.value}>
 {

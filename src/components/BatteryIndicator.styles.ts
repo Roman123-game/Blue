@@ -7,6 +7,11 @@ export default (c: ThemeColors) =>
       marginTop: 10,
     },
 
+    labelRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+
     label: {
       fontSize: 12,
       fontWeight: '700',

@@ -47,11 +47,15 @@ export default (c: ThemeColors) =>
       flex: 1,
       minWidth: 0,
     },
+    gaugeLabelRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 4,
+    },
     gaugeLabel: {
       fontSize: 12,
       fontWeight: "700",
       color: c.textSecondary,
-      marginBottom: 4,
     },
     gaugeValueRow: {
       flexDirection: "row",
