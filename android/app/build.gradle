@@ -79,11 +79,11 @@ android {
 
     namespace "com.bluetoothmonitor"
     defaultConfig {
-        applicationId "com.bluetoothmonitor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        applicationId "child.safety"
+        versionCode 2
+        versionName "1.0.1"
     }
     signingConfigs {
         debug {

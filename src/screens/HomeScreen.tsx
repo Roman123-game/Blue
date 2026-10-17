@@ -120,7 +120,7 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
           {devices.length > 0 && (
             <>
               <Text style={styles.eyebrow}>NEARBY DEVICES</Text>
-              <Text style={styles.subtitle}>Devices</Text>
+              <Text style={styles.subtitle}>Select a device</Text>
               <FlatList
                 data={devices}
                 keyExtractor={item => item.id}
