@@ -9,8 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "debug": "node wireless.js",
-    "android-install": "cd android && adb install -r app/build/outputs/apk/release/app-release.apk",
-    "android-build": "cd android && gradlew.bat assembleRelease"
+    "a:install": "cd android && adb install -r app/build/outputs/apk/release/app-release.apk",
+    "a:build": "cd android && gradlew.bat assembleRelease"
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "^16.1.5",
