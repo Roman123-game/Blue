@@ -46,7 +46,14 @@ export default function SignalStrength({ rssi, inline = false }: Props) {
           <Text style={styles.inlineTitle}>Strength:</Text>
         </View>
         <View style={styles.inlineInfoRow}>
-          <Text style={styles.inlineValue}>{rssi === null ? 'N/A' : `${rssi} dBm`}</Text>
+          {rssi === null ? (
+            <Text style={styles.inlineValue}>N/A</Text>
+          ) : (
+            <View style={styles.inlineReadingRow}>
+              <Text style={styles.inlineMeasurement}>{rssi}</Text>
+              <Text style={styles.inlineUnit}> dBm</Text>
+            </View>
+          )}
           <Text style={styles.inlineLabel}>{label}</Text>
         </View>
       </View>
@@ -72,7 +79,14 @@ export default function SignalStrength({ rssi, inline = false }: Props) {
         ))}
       </View>
 
-      <Text style={styles.value}>{rssi === null ? 'N/A' : `${rssi} dBm`}</Text>
+      {rssi === null ? (
+        <Text style={styles.value}>N/A</Text>
+      ) : (
+        <View style={styles.readingRow}>
+          <Text style={styles.measurement}>{rssi}</Text>
+          <Text style={styles.unit}> dBm</Text>
+        </View>
+      )}
 
       <Text style={styles.label}>{label}</Text>
     </View>

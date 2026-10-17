@@ -67,17 +67,26 @@ export default (c: ThemeColors) =>
       fontWeight: "700",
       color: c.textPrimary,
     },
+    gaugeMeasurement: {
+      fontSize: 18,
+      lineHeight: 22,
+      fontWeight: "700",
+      color: c.accent,
+    },
     gaugeUnit: {
       marginLeft: 3,
       fontSize: 12,
       fontWeight: "700",
-      color: c.accent,
+      color: c.textPrimary,
     },
     gaugeSubValue: {
       marginTop: 2,
       fontSize: 12,
       fontWeight: "600",
       color: c.textSecondary,
+    },
+    gaugeSubMeasurement: {
+      color: c.accent,
     },
     distanceLabel: {
       fontSize: 12,

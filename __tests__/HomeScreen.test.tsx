@@ -85,7 +85,7 @@ describe('HomeScreen', () => {
     const screen = renderHomeScreen();
     const texts = screen.root.findAllByType(Text);
     const findText = (content: string) =>
-      texts.find(text => text.props.children === content);
+      texts.find(text => String(text.props.children) === content);
     const labels = ['Strength:', 'Battery:', 'Distance:'].map(content =>
       findText(content),
     );
@@ -98,14 +98,32 @@ describe('HomeScreen', () => {
       });
     });
 
-    expect(findText('-60 dBm')?.props.style).toMatchObject({
+    expect(findText('-60')?.props.style).toMatchObject({
       fontSize: 18,
       fontWeight: '700',
+      color: lightColors.accent,
     });
-    expect(findText('50%')?.props.style).toMatchObject({
+    expect(findText(' dBm')?.props.style).toMatchObject({
+      color: lightColors.textPrimary,
+    });
+    expect(findText('50')?.props.style).toMatchObject({
       fontSize: 18,
       fontWeight: '700',
+      color: lightColors.accent,
     });
+    expect(findText('%')?.props.style).toMatchObject({
+      color: lightColors.textPrimary,
+    });
+    expect(findText('m')?.props.style).toMatchObject({
+      color: lightColors.textPrimary,
+    });
+
+    const blueMeasurements = texts.filter(text => {
+      const value = String(text.props.children);
+      const color = StyleSheet.flatten(text.props.style)?.color;
+      return color === lightColors.accent && /^-?\d+(\.\d+)?$/.test(value);
+    });
+    expect(blueMeasurements.length).toBeGreaterThanOrEqual(4);
   });
 
   it('hides the monitor title and scan button when a device is connected', () => {

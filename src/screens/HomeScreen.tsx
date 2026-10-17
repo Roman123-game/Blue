@@ -102,14 +102,25 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
                 <Text style={styles.gaugeLabel}>Distance:</Text>
               </View>
               <View style={styles.gaugeValueRow}>
-                <Text style={styles.gaugeValue}>
+                <Text
+                  style={
+                    distanceMeters === null
+                      ? styles.gaugeValue
+                      : styles.gaugeMeasurement
+                  }
+                >
                   {distanceMeters === null ? 'Calculating...' : distanceMeters.toFixed(2)}
                 </Text>
                 <Text style={styles.gaugeUnit}>m</Text>
               </View>
-              <Text style={styles.gaugeSubValue}>
-                {distanceFeet === null ? 'Waiting for signal' : `${distanceFeet.toFixed(2)} ft away`}
-              </Text>
+              {distanceFeet === null ? (
+                <Text style={styles.gaugeSubValue}>Waiting for signal</Text>
+              ) : (
+                <Text style={styles.gaugeSubValue}>
+                  <Text style={styles.gaugeSubMeasurement}>{distanceFeet.toFixed(2)}</Text>
+                  {' ft away'}
+                </Text>
+              )}
             </View>
           </View>
 

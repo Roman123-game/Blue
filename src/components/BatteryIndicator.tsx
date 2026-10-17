@@ -30,13 +30,14 @@ return (
 <Text style={styles.label}>Battery:</Text>
 </View>
 
-<Text style={styles.value}>
-{
- battery === null
- ? "Not available"
- : `${battery}%`
-}
-</Text>
+{battery === null ? (
+  <Text style={styles.value}>Not available</Text>
+) : (
+  <View style={styles.readingRow}>
+    <Text style={styles.measurement}>{battery}</Text>
+    <Text style={styles.unit}>%</Text>
+  </View>
+)}
 
 </View>
 

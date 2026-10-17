@@ -37,6 +37,11 @@ export default (c: ThemeColors) =>
       marginTop: 2,
     },
 
+    inlineReadingRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+
     inlineTitle: {
       fontSize: 12,
       fontWeight: '700',
@@ -44,6 +49,18 @@ export default (c: ThemeColors) =>
     },
 
     inlineValue: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
+
+    inlineMeasurement: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.accent,
+    },
+
+    inlineUnit: {
       fontSize: 18,
       fontWeight: '700',
       color: c.textPrimary,
@@ -62,6 +79,23 @@ export default (c: ThemeColors) =>
     },
 
     value: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
+
+    readingRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+
+    measurement: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.accent,
+    },
+
+    unit: {
       fontSize: 18,
       fontWeight: '700',
       color: c.textPrimary,

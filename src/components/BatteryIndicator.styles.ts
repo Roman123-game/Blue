@@ -23,4 +23,21 @@ export default (c: ThemeColors) =>
       fontWeight: '700',
       color: c.textPrimary,
     },
+
+    readingRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+
+    measurement: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.accent,
+    },
+
+    unit: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
   });
