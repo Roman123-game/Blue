@@ -3,6 +3,7 @@ package com.bluetoothmonitor
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
+import android.os.PowerManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
@@ -21,6 +23,7 @@ class BackgroundMonitorService : Service() {
   private var deviceName = "Bluetooth device"
   private var isDanger = false
   private var alarmPlayer: MediaPlayer? = null
+  private var screenWakeLock: PowerManager.WakeLock? = null
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     deviceName = intent?.getStringExtra(EXTRA_DEVICE_NAME) ?: deviceName
@@ -54,7 +57,23 @@ class BackgroundMonitorService : Service() {
       .setPriority(NotificationCompat.PRIORITY_HIGH)
       .setDefaults(Notification.DEFAULT_SOUND)
       .setOnlyAlertOnce(true)
+      .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+      .setFullScreenIntent(createAlertPendingIntent(), true)
       .build()
+
+  private fun createAlertPendingIntent(): PendingIntent {
+    val intent = Intent(this, MainActivity::class.java).apply {
+      flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+        Intent.FLAG_ACTIVITY_SINGLE_TOP
+    }
+    return PendingIntent.getActivity(
+      this,
+      ALERT_NOTIFICATION_ID,
+      intent,
+      PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+    )
+  }
 
   private fun createNotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -89,6 +108,8 @@ class BackgroundMonitorService : Service() {
   }
 
   private fun startAlarm() {
+    acquireScreenWakeLock()
+
     getSystemService(Vibrator::class.java)?.let { vibrator ->
       val pattern = longArrayOf(0, 800, 500)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -153,12 +174,34 @@ class BackgroundMonitorService : Service() {
 
   private fun stopAlarm() {
     getSystemService(Vibrator::class.java)?.cancel()
+    screenWakeLock?.let { wakeLock ->
+      if (wakeLock.isHeld) {
+        wakeLock.release()
+      }
+    }
+    screenWakeLock = null
     alarmPlayer?.also { player ->
       player.setOnPreparedListener(null)
       player.setOnErrorListener(null)
       player.release()
     }
     alarmPlayer = null
+  }
+
+  @Suppress("DEPRECATION")
+  private fun acquireScreenWakeLock() {
+    val powerManager = getSystemService(PowerManager::class.java)
+    val wakeLock = screenWakeLock
+      ?: powerManager.newWakeLock(
+        PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
+          PowerManager.ACQUIRE_CAUSES_WAKEUP or
+          PowerManager.ON_AFTER_RELEASE,
+        "$TAG:alert",
+      ).also { screenWakeLock = it }
+
+    if (!wakeLock.isHeld) {
+      wakeLock.acquire()
+    }
   }
 
   companion object {

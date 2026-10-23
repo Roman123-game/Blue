@@ -8,14 +8,6 @@ const styles = StyleSheet.create({
   },
 
 
-  ring:{
-    position:"absolute",
-    borderWidth:2,
-    borderColor:"#3478f6",
-    opacity:0.35,
-  },
-
-
   fill:{
     position:"absolute",
     borderWidth:10,

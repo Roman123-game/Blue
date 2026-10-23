@@ -116,17 +116,6 @@ export default function CarTopView({
         ]}
       />
       <Animated.View
-        style={[
-          styles.ring,
-          {
-            width: radarSize,
-            height: radarSize,
-            borderRadius: radarSize / 2,
-          },
-        ]}
-      />
-
-      <Animated.View
         pointerEvents="none"
         style={[
           styles.fill,
@@ -142,18 +131,6 @@ export default function CarTopView({
           },
         ]}
       />
-      <Animated.View
-        style={[
-          styles.ring,
-          {
-            width: radarSize * 0.75,
-            height: radarSize * 0.75,
-            borderRadius: radarSize * 0.375,
-          },
-        ]}
-      />
-
-
       {/* Radar Middle Ring */}
       <Animated.View
         pointerEvents="none"
@@ -171,18 +148,6 @@ export default function CarTopView({
           },
         ]}
       />
-      <Animated.View
-        style={[
-          styles.ring,
-          {
-            width: radarSize * 0.5,
-            height: radarSize * 0.5,
-            borderRadius: radarSize * 0.25,
-          },
-        ]}
-      />
-
-
       {/* Radar Inner Ring */}
       <Animated.View
         pointerEvents="none"
@@ -200,18 +165,6 @@ export default function CarTopView({
           },
         ]}
       />
-      <Animated.View
-        style={[
-          styles.ring,
-          {
-            width: radarSize * 0.25,
-            height: radarSize * 0.25,
-            borderRadius: radarSize * 0.125,
-          },
-        ]}
-      />
-
-
       {/* Car Body */}
       <View
         style={[
