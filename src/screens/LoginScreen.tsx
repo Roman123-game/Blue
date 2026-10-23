@@ -38,11 +38,11 @@ export default function LoginScreen({ onEnter }: Props) {
       }
 
       setMessage(
-        'Permissions granted!\n\nPlease make sure Bluetooth is turned on.',
+        'Permissions granted!\n\nPlease make sure Bluetooth is turned on and your phone is not on silent.',
       );
       Alert.alert(
         'Turn on Bluetooth',
-        'Please turn on Bluetooth on your phone before continuing.',
+        'Please turn on Bluetooth and make sure your phone is not on silent before continuing.',
         [
           {
             text: 'OK',

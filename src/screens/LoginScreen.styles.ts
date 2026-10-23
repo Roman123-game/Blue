@@ -48,6 +48,7 @@ export default (c: ThemeColors) => StyleSheet.create({
   googleButton: {
     width: "90%",
     maxWidth: 400,
+    minHeight: 40,
     height: 54,
     borderRadius: 8,
     backgroundColor: c.surface,
@@ -62,6 +63,7 @@ export default (c: ThemeColors) => StyleSheet.create({
   enterButton: {
     width: "90%",
     maxWidth: 400,
+    minHeight: 40,
     height: 54,
     marginTop: 12,
     borderRadius: 8,

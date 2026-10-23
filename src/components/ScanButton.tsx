@@ -16,6 +16,7 @@ export default function ScanButton({
   const colors = useThemeColors();
   const styles = useMemo(() => ({
     button: {
+      minHeight: 40,
       minWidth: 170,
       paddingVertical: 14,
       paddingHorizontal: 22,

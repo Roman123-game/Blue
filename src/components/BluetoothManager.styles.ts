@@ -33,6 +33,7 @@ export default StyleSheet.create({
   },
   button: {
     backgroundColor: "#007AFF",
+    minHeight: 40,
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
@@ -46,6 +47,7 @@ export default StyleSheet.create({
   },
   refresh: {
     backgroundColor: "#222",
+    minHeight: 40,
     padding: 12,
     borderRadius: 10,
     alignItems: "center",
@@ -63,6 +65,7 @@ export default StyleSheet.create({
   },
   disconnect: {
     backgroundColor: "red",
+    minHeight: 40,
     padding: 10,
     borderRadius: 10,
     alignItems: "center",

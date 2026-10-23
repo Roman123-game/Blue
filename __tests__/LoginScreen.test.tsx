@@ -80,6 +80,7 @@ test('passes the Google user name to the authenticated screen after permissions'
   expect(GoogleSignin.signIn).toHaveBeenCalled();
   expect(requestLoginPermissions).toHaveBeenCalled();
   expect(alertSpy).toHaveBeenCalled();
+  expect(alertSpy.mock.calls[0][1]).toContain('not on silent');
   expect(onEnter).toHaveBeenCalledWith('Maya');
   alertSpy.mockRestore();
   Object.defineProperty(Platform, 'OS', {

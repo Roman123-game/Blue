@@ -186,8 +186,8 @@ export default (c: ThemeColors) =>
     button: {
       marginTop: 16,
       alignSelf: "center",
+      minHeight: 40,
       paddingHorizontal: 20,
-      paddingVertical: 10,
       borderRadius: 10,
       backgroundColor: c.buttonBg,
     },

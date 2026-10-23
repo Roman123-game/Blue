@@ -31,7 +31,7 @@ export default (c: ThemeColors) =>
       color: c.textPrimary,
     },
     connectButton: {
-      minHeight: 48,
+      minHeight: 40,
       marginTop: 10,
       paddingHorizontal: 16,
       borderRadius: 12,
