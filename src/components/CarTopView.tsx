@@ -255,9 +255,9 @@ export default function CarTopView({
           style={[
             styles.windshield,
             {
-              width: size * 0.32 * carScale,
-              height: size * 0.22 * carScale,
-              top: size * 0.18 * carScale,
+              width: size * 0.4 * carScale,
+              height: size * 0.28 * carScale,
+              top: size * 0.14 * carScale,
             },
           ]}
         />
@@ -268,8 +268,8 @@ export default function CarTopView({
           style={[
             styles.windowBack,
             {
-              width: size * 0.32 * carScale,
-              height: size * 0.22 * carScale,
+              width: size * 0.4 * carScale,
+              height: size * 0.28 * carScale,
               bottom: size * 0.18 * carScale,
             },
           ]}
