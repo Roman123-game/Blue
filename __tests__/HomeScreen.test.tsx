@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import HomeScreen from '../src/screens/HomeScreen';
 import CarTopView from '../src/components/CarTopView';
 import useBluetooth from '../src/hooks/useBluetooth';
@@ -149,6 +149,27 @@ describe('HomeScreen', () => {
     const screen = renderHomeScreen();
 
     expect(screen.root.findByProps({ accessibilityLabel: 'Exit app' })).toBeDefined();
+  });
+
+  it('adds bottom safe-area space after the device list', () => {
+    mockedUseBluetooth.mockReturnValue({
+      ...createBluetoothState(),
+      devices: [
+        {
+          id: 'device-2',
+          name: 'Nearby Device',
+          localName: 'Nearby Device',
+          manufacturerData: null,
+          rssi: -55,
+        },
+      ],
+      connectedDevice: null,
+    } as any);
+
+    const screen = renderHomeScreen();
+    const list = screen.root.findByType(FlatList);
+
+    expect(list.props.contentContainerStyle).toEqual({ paddingBottom: 20 });
   });
 
   it('shows a green status light when a device is connected', () => {

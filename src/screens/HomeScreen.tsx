@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, FlatList } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useBluetooth from "../hooks/useBluetooth";
 import ScanButton from '../components/ScanButton';
 import DeviceCard from '../components/DeviceCard';
@@ -32,6 +33,7 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
     connectionStatus,
   } = useBluetooth();
   const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const distanceMeters = useMemo(() => {
     if (rssi === null || rssi === undefined) {
@@ -143,6 +145,7 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
               <FlatList
                 data={devices}
                 keyExtractor={item => item.id}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
                 renderItem={({ item }) => (
                   <DeviceCard
                     device={item}
