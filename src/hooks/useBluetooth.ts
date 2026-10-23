@@ -4,7 +4,6 @@ import { NativeModules, Platform } from 'react-native';
 import { Buffer } from 'buffer';
 import BluetoothService from '../bluetooth/BluetoothService';
 import { SCAN_TIME } from '../bluetooth/constants';
-import { rssiToDistance } from '../utils/rssiToDistance';
 
 const RSSI_SMOOTHING_WINDOW = 8;
 const RSSI_REFRESH_INTERVAL = 1000;
@@ -259,6 +258,7 @@ export default function useBluetooth() {
     if (Platform.OS === 'android') {
       BackgroundMonitor?.start(
         connectedDevice.name || connectedDevice.localName || 'Bluetooth device',
+        connectedDevice.id,
       );
     }
     // ------------------------------------------------
@@ -271,13 +271,6 @@ export default function useBluetooth() {
             await connectedDevice.readRSSI();
           addRssiSample(
             updatedDevice.rssi ?? null,
-          );
-          if (Platform.OS === 'android' && updatedDevice.rssi !== null) {
-            const distance = rssiToDistance(updatedDevice.rssi);
-            BackgroundMonitor?.updateDistance(distance);
-          }
-          setConnectedDevice(
-            updatedDevice,
           );
         } catch (error) {
           console.log(

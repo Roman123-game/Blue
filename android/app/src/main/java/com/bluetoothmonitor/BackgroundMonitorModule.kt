@@ -12,15 +12,11 @@ class BackgroundMonitorModule(
   override fun getName(): String = NAME
 
   @ReactMethod
-  fun start(deviceName: String?) {
+  fun start(deviceName: String?, deviceAddress: String?) {
     val intent = Intent(context, BackgroundMonitorService::class.java)
       .putExtra(BackgroundMonitorService.EXTRA_DEVICE_NAME, deviceName ?: "Bluetooth device")
+      .putExtra(BackgroundMonitorService.EXTRA_DEVICE_ADDRESS, deviceAddress)
     ContextCompat.startForegroundService(context, intent)
-  }
-
-  @ReactMethod
-  fun updateDistance(distanceMeters: Double) {
-    BackgroundMonitorService.updateDistance(context, distanceMeters)
   }
 
   @ReactMethod
