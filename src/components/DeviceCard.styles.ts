@@ -4,10 +4,10 @@ import { ThemeColors } from '../theme';
 export default (c: ThemeColors) =>
   StyleSheet.create({
     card: {
-      padding: 10,
-      marginVertical: 5,
+      padding: 8,
+      marginVertical: 3,
       borderWidth: 1,
-      borderRadius: 12,
+      borderRadius: 10,
       borderColor: c.surfaceBorder,
       backgroundColor: c.surface,
     },
