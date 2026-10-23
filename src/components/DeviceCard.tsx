@@ -69,18 +69,18 @@ export default function DeviceCard({ device, onConnect, connected }: Props) {
       </Text>
       <Text style={styles.label}>Manufacturer:</Text>
       <Text style={styles.value}>{manufacturer.name}</Text>
-      <Text style={styles.info}>
+      {/* <Text style={styles.info}>
         Company ID:
         {manufacturer.companyId}
-      </Text>
+      </Text> */}
       {/* <Text selectable style={styles.info}>
         Raw:
         {manufacturer.raw}
       </Text> */}
-      <Text style={styles.info}>
+      {/* <Text style={styles.info}>
         Services:
         {(device.serviceUUIDs || []).join(',') || 'None'}
-      </Text>
+      </Text> */}
       <TouchableOpacity
         accessible
         accessibilityRole="button"
