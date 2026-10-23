@@ -73,10 +73,10 @@ export default function DeviceCard({ device, onConnect, connected }: Props) {
         Company ID:
         {manufacturer.companyId}
       </Text>
-      <Text selectable style={styles.info}>
+      {/* <Text selectable style={styles.info}>
         Raw:
         {manufacturer.raw}
-      </Text>
+      </Text> */}
       <Text style={styles.info}>
         Services:
         {(device.serviceUUIDs || []).join(',') || 'None'}

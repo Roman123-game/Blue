@@ -14,7 +14,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     backgroundColor: "#eee",
     borderRadius: 12,
     marginBottom: 12,
@@ -28,7 +29,7 @@ export default StyleSheet.create({
   },
   address: {
     color: "#777",
-    marginTop: 5,
+    marginTop: 2,
   },
   button: {
     backgroundColor: "#007AFF",

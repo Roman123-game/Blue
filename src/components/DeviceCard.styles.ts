@@ -4,8 +4,8 @@ import { ThemeColors } from '../theme';
 export default (c: ThemeColors) =>
   StyleSheet.create({
     card: {
-      padding: 15,
-      marginVertical: 8,
+      padding: 10,
+      marginVertical: 5,
       borderWidth: 1,
       borderRadius: 12,
       borderColor: c.surfaceBorder,
@@ -14,14 +14,14 @@ export default (c: ThemeColors) =>
     title: {
       fontSize: 18,
       fontWeight: 'bold',
-      marginBottom: 10,
+      marginBottom: 6,
       color: c.textPrimary,
     },
     info: {
       color: c.textSecondary,
     },
     label: {
-      marginTop: 10,
+      marginTop: 6,
       fontWeight: 'bold',
       color: c.textSecondary,
     },
@@ -32,7 +32,7 @@ export default (c: ThemeColors) =>
     },
     connectButton: {
       minHeight: 48,
-      marginTop: 16,
+      marginTop: 10,
       paddingHorizontal: 16,
       borderRadius: 12,
       backgroundColor: c.accent,
