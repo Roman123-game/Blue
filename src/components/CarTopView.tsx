@@ -37,10 +37,56 @@ export default function CarTopView({
 
 
   const [dotPosition, setDotPosition] = useState<Point>(carPosition);
+  const driveProgress = useRef(new Animated.Value(0)).current;
+  const cloudProgress = useRef([
+    new Animated.Value(0),
+    new Animated.Value(0),
+    new Animated.Value(0),
+  ]).current;
   const innerRingOpacity = useRef(new Animated.Value(0.35)).current;
   const secondRingOpacity = useRef(new Animated.Value(0.35)).current;
   const middleRingOpacity = useRef(new Animated.Value(0.35)).current;
   const outerRingOpacity = useRef(new Animated.Value(0.35)).current;
+
+  useEffect(() => {
+    const drive = Animated.loop(
+      Animated.timing(driveProgress, {
+        toValue: 1,
+        duration: 900,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    );
+
+    drive.start();
+
+    return () => drive.stop();
+  }, [driveProgress]);
+
+  useEffect(() => {
+    const clouds = cloudProgress.map((progress, index) =>
+      Animated.loop(
+        Animated.sequence([
+          Animated.delay(index * 650),
+          Animated.timing(progress, {
+            toValue: 1,
+            duration: 2600,
+            easing: Easing.linear,
+            useNativeDriver: true,
+          }),
+          Animated.timing(progress, {
+            toValue: 0,
+            duration: 0,
+            useNativeDriver: true,
+          }),
+        ]),
+      ),
+    );
+
+    clouds.forEach(cloud => cloud.start());
+
+    return () => clouds.forEach(cloud => cloud.stop());
+  }, [cloudProgress]);
 
   useEffect(() => {
     const pulseRing = (opacity: Animated.Value) => Animated.sequence([
@@ -165,6 +211,33 @@ export default function CarTopView({
           },
         ]}
       />
+
+      {[center - 16, center - 2, center + 12].map(left => (
+        <Animated.View
+          key={left}
+          pointerEvents="none"
+          style={[
+            styles.motionTrail,
+            {
+              left,
+              top: center + (size * carScale) / 2 + 8,
+              opacity: driveProgress.interpolate({
+                inputRange: [0, 0.35, 1],
+                outputRange: [0, 0.65, 0],
+              }),
+              transform: [
+                {
+                  translateY: driveProgress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-12, 16],
+                  }),
+                },
+              ],
+            },
+          ]}
+        />
+      ))}
+
       {/* Car Body */}
       <View
         style={[
@@ -218,6 +291,44 @@ export default function CarTopView({
 
       </View>
 
+      {cloudProgress.map((progress, index) => {
+        const cloud = [
+          { left: center - 54, width: 44 },
+          { left: center + 20, width: 48 },
+          { left: center - 28, width: 40 },
+        ][index];
+
+        return (
+          <Animated.View
+            key={index}
+            pointerEvents="none"
+            style={[
+              styles.cloud,
+              {
+                left: cloud.left,
+                width: cloud.width,
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.12, 0.78, 1],
+                  outputRange: [0, 0.48, 0.48, 0],
+                }),
+                transform: [
+                  {
+                    translateY: progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [-24, radarSize + 24],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            <View style={[styles.cloudBody, { width: cloud.width }]} />
+            <View style={[styles.cloudPuff, styles.cloudPuffOffset]} />
+            <View style={[styles.cloudPuffLarge, styles.cloudPuffLargeOffset]} />
+            <View style={[styles.cloudPuff, { left: cloud.width - 19 }]} />
+          </Animated.View>
+        );
+      })}
 
       {/* Draggable Target */}
       <DraggableDot

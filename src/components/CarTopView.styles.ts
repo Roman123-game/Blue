@@ -29,6 +29,54 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
 
+  motionTrail:{
+    position:"absolute",
+    width:3,
+    height:12,
+    borderRadius:2,
+    backgroundColor:"#64b5f6",
+  },
+
+  cloud:{
+    position:"absolute",
+    top:0,
+    height:24,
+  },
+
+  cloudBody:{
+    position:"absolute",
+    bottom:0,
+    height:14,
+    borderRadius:8,
+    backgroundColor:"#90caf9",
+  },
+
+  cloudPuff:{
+    position:"absolute",
+    top:0,
+    width:18,
+    height:18,
+    borderRadius:9,
+    backgroundColor:"#90caf9",
+  },
+
+  cloudPuffLarge:{
+    position:"absolute",
+    top:-4,
+    width:23,
+    height:23,
+    borderRadius:12,
+    backgroundColor:"#90caf9",
+  },
+
+  cloudPuffOffset:{
+    left:5,
+  },
+
+  cloudPuffLargeOffset:{
+    left:13,
+  },
+
 
   windshield:{
     position:"absolute",
