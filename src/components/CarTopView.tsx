@@ -270,7 +270,7 @@ export default function CarTopView({
             {
               width: size * 0.4 * carScale,
               height: size * 0.28 * carScale,
-              bottom: size * 0.18 * carScale,
+              bottom: size * 0.08 * carScale,
             },
           ]}
         />
