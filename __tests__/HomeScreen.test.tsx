@@ -122,14 +122,14 @@ describe('HomeScreen', () => {
     });
   });
 
-  it('renders each sensor gauge in its own square tile', () => {
+  it('renders each sensor gauge in its own compact tile', () => {
     const screen = renderHomeScreen();
 
     ['signal', 'battery', 'distance'].forEach(name => {
       const card = screen.root.findByProps({ testID: `gauge-card-${name}` });
 
       expect(StyleSheet.flatten(card.props.style)).toMatchObject({
-        aspectRatio: 1,
+        aspectRatio: 1.42045,
         borderWidth: 1,
         backgroundColor: lightColors.gaugeCard,
       });

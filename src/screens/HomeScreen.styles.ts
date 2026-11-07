@@ -132,7 +132,7 @@ export default (c: ThemeColors) =>
     gaugeTile: {
       flex: 1,
       minWidth: 0,
-      aspectRatio: 1,
+      aspectRatio: 1.42045,
       padding: 8,
       borderWidth: 1,
       borderColor: c.accentSoft,
