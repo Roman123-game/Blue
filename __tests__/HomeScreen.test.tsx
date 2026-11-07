@@ -4,9 +4,11 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import HomeScreen from '../src/screens/HomeScreen';
 import CarTopView from '../src/components/CarTopView';
 import useBluetooth from '../src/hooks/useBluetooth';
+import isAndroidEmulator from '../src/utils/isAndroidEmulator';
 import { lightColors } from '../src/theme';
 
 jest.mock('../src/hooks/useBluetooth', () => jest.fn());
+jest.mock('../src/utils/isAndroidEmulator', () => jest.fn());
 jest.mock('../src/components/CarTopView', () => () => null);
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
@@ -20,6 +22,9 @@ jest.mock('../src/theme', () => {
 });
 
 const mockedUseBluetooth = useBluetooth as jest.MockedFunction<typeof useBluetooth>;
+const mockedIsAndroidEmulator = isAndroidEmulator as jest.MockedFunction<
+  typeof isAndroidEmulator
+>;
 
 const createBluetoothState = (rssi = -60) => ({
   devices: [],
@@ -47,7 +52,43 @@ const renderHomeScreen = () => {
 
 describe('HomeScreen', () => {
   beforeEach(() => {
+    mockedIsAndroidEmulator.mockReturnValue(false);
     mockedUseBluetooth.mockReturnValue(createBluetoothState() as any);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('does not render a sun or moon mascot', () => {
+    mockedUseBluetooth.mockReturnValue({
+      ...createBluetoothState(),
+      connectedDevice: null,
+    } as any);
+
+    const screen = renderHomeScreen();
+
+    expect(screen.root.findAllByProps({ testID: 'theme-mascot' })).toHaveLength(0);
+  });
+
+  it('shows the monitoring screen with sample data on an Android emulator', () => {
+    mockedIsAndroidEmulator.mockReturnValue(true);
+    mockedUseBluetooth.mockReturnValue({
+      ...createBluetoothState(),
+      connectedDevice: null,
+      rssi: null,
+      battery: null,
+      connectionStatus: false,
+    } as any);
+
+    const tree = renderHomeScreen().toJSON();
+    const treeString = JSON.stringify(tree);
+
+    expect(treeString).toContain('SIMULATOR PREVIEW · SAMPLE DATA');
+    expect(treeString).toContain('Demo sensor');
+    expect(treeString).toContain('50');
+    expect(treeString).not.toContain('Connect your device');
+    expect(treeString).not.toContain('Scan Devices');
   });
 
   it('renders distance with signal strength and battery details at the bottom', () => {
@@ -78,6 +119,20 @@ describe('HomeScreen', () => {
       });
 
       expect(usesTextColor).toBe(true);
+    });
+  });
+
+  it('renders each sensor gauge in its own square tile', () => {
+    const screen = renderHomeScreen();
+
+    ['signal', 'battery', 'distance'].forEach(name => {
+      const card = screen.root.findByProps({ testID: `gauge-card-${name}` });
+
+      expect(StyleSheet.flatten(card.props.style)).toMatchObject({
+        aspectRatio: 1,
+        borderWidth: 1,
+        backgroundColor: lightColors.gaugeCard,
+      });
     });
   });
 

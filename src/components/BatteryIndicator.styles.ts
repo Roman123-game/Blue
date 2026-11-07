@@ -4,7 +4,9 @@ import { ThemeColors } from '../theme';
 export default (c: ThemeColors) =>
   StyleSheet.create({
     container: {
-      marginTop: 10,
+      flex: 1,
+      marginTop: 0,
+      justifyContent: 'space-between',
     },
 
     labelRow: {

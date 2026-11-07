@@ -43,14 +43,11 @@ export default (c: ThemeColors) =>
       justifyContent: "center",
       alignItems: "center",
     },
-    distanceWrap: {
-      flex: 1,
-      minWidth: 0,
-    },
     gaugeLabelRow: {
       flexDirection: "row",
       alignItems: "center",
       marginBottom: 4,
+      flexWrap: "wrap",
     },
     gaugeLabel: {
       fontSize: 12,
@@ -128,35 +125,19 @@ export default (c: ThemeColors) =>
     },
     infoRow: {
       flexDirection: "row",
-      alignItems: "flex-start",
-      justifyContent: "space-between",
+      alignItems: "stretch",
+      gap: 8,
       marginTop: 0,
+    },
+    gaugeTile: {
+      flex: 1,
+      minWidth: 0,
+      aspectRatio: 1,
+      padding: 8,
       borderWidth: 1,
       borderColor: c.accentSoft,
-      paddingHorizontal: 10,
-      paddingVertical: 13,
       borderRadius: 14,
       backgroundColor: c.gaugeCard,
-    },
-    strengthWrap: {
-      flex: 1,
-      minWidth: 0,
-    },
-
-    separator: {
-      width: 1,
-      height: 54,
-      backgroundColor: c.surfaceBorder,
-      marginHorizontal: 8,
-    },
-
-    batteryWrap: {
-      flex: 1,
-      minWidth: 0,
-    },
-    metricColumn: {
-      flexDirection: "column",
-      marginTop: 0,
     },
     carWrap: {
       flex: 1,

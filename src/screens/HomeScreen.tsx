@@ -11,6 +11,7 @@ import ConnectionStatus from '../components/ConnectionStatus';
 import CarTopView from '../components/CarTopView';
 import ExitButton from '../components/ExitButton';
 import { rssiToDistance, rssiToDistanceFeet } from '../utils/rssiToDistance';
+import isAndroidEmulator from '../utils/isAndroidEmulator';
 import createStyles from './HomeScreen.styles';
 import { useThemeColors } from '../theme';
 import GaugeIcon from '../components/GaugeIcon';
@@ -35,29 +36,32 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
   const colors = useThemeColors();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const showSimulatorPreview = isAndroidEmulator() && !connectedDevice;
+  const activeRssi = showSimulatorPreview ? -60 : rssi;
+  const activeBattery = showSimulatorPreview ? 50 : battery;
   const distanceMeters = useMemo(() => {
-    if (rssi === null || rssi === undefined) {
+    if (activeRssi === null || activeRssi === undefined) {
       return null;
     }
-    return rssiToDistance(rssi);
-  }, [rssi]);
+    return rssiToDistance(activeRssi);
+  }, [activeRssi]);
 
   const distanceFeet = useMemo(() => {
-    if (rssi === null || rssi === undefined) {
+    if (activeRssi === null || activeRssi === undefined) {
       return null;
     }
-    return rssiToDistanceFeet(rssi);
-  }, [rssi]);
+    return rssiToDistanceFeet(activeRssi);
+  }, [activeRssi]);
 
   return (
     <View style={styles.container}>
-      {!connectedDevice && <ExitButton />}
+      {!connectedDevice && !showSimulatorPreview && <ExitButton />}
 
       {userName ? (
         <Text style={styles.welcome}>Welcome, {userName}!</Text>
       ) : null}
 
-      {!connectedDevice && devices.length === 0 && (
+      {!connectedDevice && !showSimulatorPreview && devices.length === 0 && (
         <View style={styles.emptyState}>
           <Text style={styles.eyebrow}>VEHICLE MONITOR</Text>
           <Text style={styles.title}>Connect your device</Text>
@@ -67,34 +71,34 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
           <ScanButton scanning={scanning} onPress={scanDevices} />
         </View>
       )}
-      {connectedDevice ? (
+      {connectedDevice || showSimulatorPreview ? (
         <View style={styles.connectedContainer}>
           <View style={styles.headerRow}>
             <View style={styles.headerContent}>
               <View style={styles.statusHeaderRow}>
-                <Text style={styles.eyebrow}>Live sensor status</Text>
-                <ConnectionStatus connected={connectionStatus} />
+                <Text style={styles.eyebrow}>
+                  {showSimulatorPreview ? 'SIMULATOR PREVIEW · SAMPLE DATA' : 'Live sensor status'}
+                </Text>
+                <ConnectionStatus connected={showSimulatorPreview || connectionStatus} />
               </View>
               <Text style={styles.name}>
-                {connectedDevice.name || connectedDevice.localName || 'Unknown Device'}
+                {showSimulatorPreview
+                  ? 'Demo sensor'
+                  : connectedDevice?.name || connectedDevice?.localName || 'Unknown Device'}
               </Text>
             </View>
           </View>
 
           <View style={styles.infoRow}>
-            <View style={styles.strengthWrap}>
-              <SignalStrength rssi={rssi} inline />
+            <View testID="gauge-card-signal" style={styles.gaugeTile}>
+              <SignalStrength rssi={activeRssi} inline />
             </View>
 
-            <View style={styles.separator} />
-
-            <View style={styles.batteryWrap}>
-              <BatteryIndicator battery={battery} style={styles.metricColumn} />
+            <View testID="gauge-card-battery" style={styles.gaugeTile}>
+              <BatteryIndicator battery={activeBattery} />
             </View>
 
-            <View style={styles.separator} />
-
-            <View style={styles.distanceWrap}>
+            <View testID="gauge-card-distance" style={styles.gaugeTile}>
               <View style={styles.gaugeLabelRow}>
                 <GaugeIcon
                   name="distance"
@@ -128,13 +132,15 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
 
           {distanceMeters !== null && (
             <View style={styles.carWrap}>
-              <CarTopView rssi={rssi} />
+              <CarTopView rssi={activeRssi} />
             </View>
           )}
 
-          <View style={styles.bottomRow}>
-            <DisconnectButton onPress={disconnect} />
-          </View>
+          {connectedDevice && (
+            <View style={styles.bottomRow}>
+              <DisconnectButton onPress={disconnect} />
+            </View>
+          )}
         </View>
       ) : (
         <>
