@@ -11,7 +11,8 @@
     "debug": "node wireless.js",
     "a:install": "cd android && adb install -r app/build/outputs/apk/release/app-release.apk",
     "a:build": "cd android && gradlew.bat assembleRelease",
-    "a:bundle": "cd android && gradlew.bat bundleRelease"
+    "a:bundle": "cd android && gradlew.bat bundleRelease",
+    "a:clean": "cd android && gradlew.bat clean"
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "^16.1.5",
