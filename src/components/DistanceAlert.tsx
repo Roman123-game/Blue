@@ -11,6 +11,7 @@ import {
   Vibration,
 } from "react-native";
 import styles from "./DistanceAlert.styles";
+
 interface Props {
   distanceMeters: number;
   limit?: number;
