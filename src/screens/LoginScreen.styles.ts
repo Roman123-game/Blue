@@ -26,6 +26,15 @@ export default (c: ThemeColors) => StyleSheet.create({
     fontWeight: "700",
   },
 
+  logoDescription: {
+    maxWidth: 320,
+    marginTop: 6,
+    color: c.textSecondary,
+    fontSize: 16,
+    lineHeight: 22,
+    textAlign: "center",
+  },
+
   permissionMessage: {
     width: "90%",
     maxWidth: 400,

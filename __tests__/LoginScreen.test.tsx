@@ -26,6 +26,7 @@ test('renders Google sign-in and the previous Enter action', async () => {
     screen = ReactTestRenderer.create(<LoginScreen />);
   });
   const renderedScreen = JSON.stringify(screen!.toJSON());
+  expect(renderedScreen).toContain('Monitor proximity and stay connected to loved ones.');
   expect(renderedScreen).toContain('Continue with Google');
   expect(renderedScreen).toContain('Enter');
   expect(screen!.root.findAllByProps({ accessibilityLabel: 'Exit app' })).toHaveLength(1);

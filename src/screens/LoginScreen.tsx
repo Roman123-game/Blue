@@ -139,6 +139,9 @@ export default function LoginScreen({ onEnter }: Props) {
         {/* </Text> */}
 
         <Text style={styles.logoSubText}>Child Safety</Text>
+        <Text style={styles.logoDescription}>
+          Monitor proximity and stay connected to loved ones.
+        </Text>
       </View>
 
       {message.length > 0 && (
