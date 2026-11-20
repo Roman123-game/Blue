@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Text} from "react-native";
 
 import styles from "./DistanceMeasure.styles";
 
