@@ -20,7 +20,8 @@ export default function DistanceMeasure({
     const dx = dotPosition.x - carPosition.x;
     const dy = dotPosition.y - carPosition.y;
     const distanceMeters = Math.sqrt(dx * dx + dy * dy);
-     setDistance(distanceMeters)}, [carPosition,dotPosition,maxDistance]);
+     setDistance(distanceMeters)}
+     [carPosition,dotPosition,maxDistance]);
   return (
     <Text style={styles.text}>
       Distance: {distance.toFixed(2)} m

@@ -11,7 +11,6 @@ import {
   Vibration,
 } from "react-native";
 import styles from "./DistanceAlert.styles";
-
 interface Props {
   distanceMeters: number;
   limit?: number;
@@ -64,11 +63,8 @@ export default function DistanceAlert({
     }
     stopVibration();
     scale.setValue(1);
-  }, [
-    isDanger,
-    dismissed,
-    scale,
-  ]);
+  }, [isDanger,dismissed,scale]);
+
   function resetAlert() {
     setDismissed(true);
     stopVibration();
@@ -85,6 +81,7 @@ export default function DistanceAlert({
   if (!isDanger || dismissed) {
     return null;
   }
+  
   return (
     <Animated.View
       style={[
