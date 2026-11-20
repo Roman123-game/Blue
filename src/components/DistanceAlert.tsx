@@ -1,4 +1,4 @@
-import React, {
+import{
   useEffect,
   useRef,
   useState,
@@ -11,6 +11,7 @@ import {
   Vibration,
 } from "react-native";
 import styles from "./DistanceAlert.styles";
+
 interface Props {
   distanceMeters: number;
   limit?: number;
@@ -81,7 +82,7 @@ export default function DistanceAlert({
   if (!isDanger || dismissed) {
     return null;
   }
-  
+
   return (
     <Animated.View
       style={[
