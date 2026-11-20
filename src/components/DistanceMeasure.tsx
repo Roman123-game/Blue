@@ -29,18 +29,10 @@ export default function DistanceMeasure({
     const dy = dotPosition.y - carPosition.y;
 
 
-    const distanceMeters = Math.sqrt(
-      dx * dx + dy * dy
+    const distanceMeters = Math.sqrt(dx * dx + dy * dy);
+     setDistance(distanceMeters)}, 
+     [carPosition,dotPosition,maxDistance]
     );
-
-
-    setDistance(distanceMeters);
-
-  }, [
-    carPosition,
-    dotPosition,
-    maxDistance,
-  ]);
 
 
   return (
