@@ -6,6 +6,7 @@ import CarTopView from '../src/components/CarTopView';
 import useBluetooth from '../src/hooks/useBluetooth';
 import isAndroidEmulator from '../src/utils/isAndroidEmulator';
 import { lightColors } from '../src/theme';
+import { DistanceUnit } from '../src/types/distance';
 
 jest.mock('../src/hooks/useBluetooth', () => jest.fn());
 jest.mock('../src/utils/isAndroidEmulator', () => jest.fn());
@@ -42,10 +43,10 @@ const createBluetoothState = (rssi = -60) => ({
   connectionStatus: true,
 });
 
-const renderHomeScreen = () => {
+const renderHomeScreen = (distanceUnit: DistanceUnit = 'meters') => {
   let screen: renderer.ReactTestRenderer;
   renderer.act(() => {
-    screen = renderer.create(<HomeScreen />);
+    screen = renderer.create(<HomeScreen distanceUnit={distanceUnit} />);
   });
   return screen!;
 };
@@ -92,17 +93,35 @@ describe('HomeScreen', () => {
   });
 
   it('renders distance with signal strength and battery details at the bottom', () => {
-    const tree = renderHomeScreen().toJSON();
+    const screen = renderHomeScreen();
+    const tree = screen.toJSON();
 
     const treeString = JSON.stringify(tree);
     const strengthIndex = treeString.indexOf('Strength');
     const batteryIndex = treeString.indexOf('Battery:');
     const distanceIndex = treeString.indexOf('Distance');
+    const distanceUnits = screen.root
+      .findAllByType(Text)
+      .map(text => String(text.props.children))
+      .filter(text => text === 'm' || text === 'ft');
 
     expect(strengthIndex).toBeGreaterThan(-1);
     expect(batteryIndex).toBeGreaterThan(strengthIndex);
     expect(distanceIndex).toBeGreaterThan(batteryIndex);
-    expect(treeString).toContain('m');
+    expect(distanceUnits).toEqual(['m']);
+  });
+
+  it('displays feet as the primary distance when feet are selected', () => {
+    const screen = renderHomeScreen('feet');
+    const tree = screen.toJSON();
+    const treeString = JSON.stringify(tree);
+    const distanceUnits = screen.root
+      .findAllByType(Text)
+      .map(text => String(text.props.children))
+      .filter(text => text === 'm' || text === 'ft');
+
+    expect(treeString).toContain('3.61');
+    expect(distanceUnits).toEqual(['ft']);
   });
 
   it('shows an icon for each sensor gauge', () => {
@@ -178,7 +197,7 @@ describe('HomeScreen', () => {
       const color = StyleSheet.flatten(text.props.style)?.color;
       return color === lightColors.accent && /^-?\d+(\.\d+)?$/.test(value);
     });
-    expect(blueMeasurements.length).toBeGreaterThanOrEqual(4);
+    expect(blueMeasurements).toHaveLength(3);
   });
 
   it('hides the monitor title and scan button when a device is connected', () => {

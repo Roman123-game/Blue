@@ -15,13 +15,19 @@ import isAndroidEmulator from '../utils/isAndroidEmulator';
 import createStyles from './HomeScreen.styles';
 import { useThemeColors } from '../theme';
 import GaugeIcon from '../components/GaugeIcon';
+import { DistanceUnit } from '../types/distance';
 
 interface Props {
   onBack?: () => void;
   userName?: string;
+  distanceUnit?: DistanceUnit;
 }
 
-export default function HomeScreen({ onBack: _onBack, userName }: Props) {
+export default function HomeScreen({
+  onBack: _onBack,
+  userName,
+  distanceUnit = 'meters',
+}: Props) {
   const {
     devices,
     scanning,
@@ -52,6 +58,8 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
     }
     return rssiToDistanceFeet(activeRssi);
   }, [activeRssi]);
+  const primaryDistance = distanceUnit === 'feet' ? distanceFeet : distanceMeters;
+  const primaryUnit = distanceUnit === 'feet' ? 'ft' : 'm';
 
   return (
     <View style={styles.container}>
@@ -110,23 +118,20 @@ export default function HomeScreen({ onBack: _onBack, userName }: Props) {
               <View style={styles.gaugeValueRow}>
                 <Text
                   style={
-                    distanceMeters === null
+                    primaryDistance === null
                       ? styles.gaugeValue
                       : styles.gaugeMeasurement
                   }
                 >
-                  {distanceMeters === null ? 'Calculating...' : distanceMeters.toFixed(2)}
+                  {primaryDistance === null
+                    ? 'Calculating...'
+                    : primaryDistance.toFixed(2)}
                 </Text>
-                <Text style={styles.gaugeUnit}>m</Text>
+                <Text style={styles.gaugeUnit}>{primaryUnit}</Text>
               </View>
-              {distanceFeet === null ? (
+              {primaryDistance === null ? (
                 <Text style={styles.gaugeSubValue}>Waiting for signal</Text>
-              ) : (
-                <Text style={styles.gaugeSubValue}>
-                  <Text style={styles.gaugeSubMeasurement}>{distanceFeet.toFixed(2)}</Text>
-                  {' ft away'}
-                </Text>
-              )}
+              ) : null}
             </View>
           </View>
 
