@@ -50,6 +50,8 @@ describe('MenuScreen', () => {
           userName="Alex"
           distanceUnit="meters"
           onDistanceUnitChange={jest.fn()}
+          themeMode="light"
+          onThemeModeChange={jest.fn()}
         />,
       );
     });
@@ -69,6 +71,8 @@ describe('MenuScreen', () => {
         <MenuScreen
           distanceUnit="meters"
           onDistanceUnitChange={onDistanceUnitChange}
+          themeMode="light"
+          onThemeModeChange={jest.fn()}
         />,
       );
     });
@@ -80,5 +84,29 @@ describe('MenuScreen', () => {
     });
 
     expect(onDistanceUnitChange).toHaveBeenCalledWith('feet');
+  });
+
+  it('lets the user switch to dark theme in the menu', () => {
+    const onThemeModeChange = jest.fn();
+    let screen: renderer.ReactTestRenderer;
+
+    renderer.act(() => {
+      screen = renderer.create(
+        <MenuScreen
+          distanceUnit="meters"
+          onDistanceUnitChange={jest.fn()}
+          themeMode="light"
+          onThemeModeChange={onThemeModeChange}
+        />,
+      );
+    });
+
+    renderer.act(() => {
+      screen!.root
+        .findByProps({ accessibilityLabel: 'Theme Dark' })
+        .props.onPress();
+    });
+
+    expect(onThemeModeChange).toHaveBeenCalledWith('dark');
   });
 });

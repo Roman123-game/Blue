@@ -37,6 +37,30 @@ export default (c: ThemeColors) =>
       borderColor: c.surfaceBorder,
       backgroundColor: c.surface,
     },
+    cardEyebrow: {
+      marginBottom: 8,
+      fontSize: 11,
+      fontWeight: '800',
+      letterSpacing: 1.2,
+      color: c.accent,
+    },
+    cardTitle: {
+      fontSize: 17,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
+    cardDescription: {
+      marginTop: 6,
+      fontSize: 13,
+      lineHeight: 19,
+      color: c.textSecondary,
+    },
+    sectionTitle: {
+      marginTop: 24,
+      fontSize: 17,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
     unitSelector: {
       flexDirection: 'row',
       marginTop: 16,

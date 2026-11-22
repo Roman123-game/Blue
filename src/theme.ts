@@ -1,4 +1,6 @@
-import { useColorScheme } from 'react-native';
+import React, { createContext, useContext } from 'react';
+
+export type ThemeMode = 'light' | 'dark';
 
 export interface ThemeColors {
   background: string;
@@ -54,7 +56,18 @@ export const darkColors: ThemeColors = {
   gaugeCard: '#18314e',
 };
 
+const ThemeContext = createContext<ThemeMode>('light');
+
+export function ThemeProvider({
+  mode,
+  children,
+}: {
+  mode: ThemeMode;
+  children: React.ReactNode;
+}) {
+  return React.createElement(ThemeContext.Provider, { value: mode }, children);
+}
+
 export function useThemeColors(): ThemeColors {
-  const scheme = useColorScheme();
-  return scheme === 'dark' ? darkColors : lightColors;
+  return useContext(ThemeContext) === 'dark' ? darkColors : lightColors;
 }
