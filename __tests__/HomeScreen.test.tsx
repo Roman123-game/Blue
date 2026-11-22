@@ -155,6 +155,28 @@ describe('HomeScreen', () => {
     });
   });
 
+  it('places the battery measurement directly beneath its label', () => {
+    const screen = renderHomeScreen();
+    const batteryValue = screen.root
+      .findAllByType(Text)
+      .find(text => String(text.props.children) === '50');
+    const readingRow = batteryValue!.parent!;
+    const batteryGauge = screen.root.findByProps({
+      testID: 'gauge-card-battery',
+    });
+    const hasTopAlignedContainer = batteryGauge
+      .findAllByType(View)
+      .some(
+        ({ props }) =>
+          StyleSheet.flatten(props.style)?.justifyContent === 'flex-start',
+      );
+
+    expect(StyleSheet.flatten(readingRow.props.style)).toMatchObject({
+      marginTop: 2,
+    });
+    expect(hasTopAlignedContainer).toBe(true);
+  });
+
   it('uses consistent typography for sensor labels and readings', () => {
     const screen = renderHomeScreen();
     const texts = screen.root.findAllByType(Text);

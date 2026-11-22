@@ -68,15 +68,6 @@ export default function MenuScreen({
         </View>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardEyebrow}>ABOUT THE APP</Text>
-        <Text style={styles.cardTitle}>Stay close, stay informed</Text>
-        <Text style={styles.cardDescription}>
-          Child Safety monitors the proximity of a paired Bluetooth device. Open
-          Home to connect a device and view its live signal, battery, and
-          distance.
-        </Text>
-      </View>
     </View>
   );
 }

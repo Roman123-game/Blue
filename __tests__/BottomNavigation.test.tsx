@@ -41,7 +41,7 @@ describe('BottomNavigation', () => {
 });
 
 describe('MenuScreen', () => {
-  it('shows a personalized introduction and explains the monitoring features', () => {
+  it('shows the personalized menu introduction and unit preference', () => {
     let screen: renderer.ReactTestRenderer;
 
     renderer.act(() => {
@@ -56,8 +56,8 @@ describe('MenuScreen', () => {
 
     const tree = JSON.stringify(screen!.toJSON());
     expect(tree).toContain('Hello, Alex.');
-    expect(tree).toContain('Stay close, stay informed');
-    expect(tree).toContain('signal, battery, and distance');
+    expect(tree).toContain('Distance units');
+    expect(tree).not.toContain('ABOUT THE APP');
   });
 
   it('lets the user select feet in the menu', () => {

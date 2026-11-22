@@ -6,7 +6,7 @@ export default (c: ThemeColors) =>
     container: {
       flex: 1,
       marginTop: 0,
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
     },
 
     labelRow: {
@@ -21,6 +21,7 @@ export default (c: ThemeColors) =>
     },
 
     value: {
+      marginTop: 2,
       fontSize: 18,
       fontWeight: '700',
       color: c.textPrimary,
@@ -29,6 +30,7 @@ export default (c: ThemeColors) =>
     readingRow: {
       flexDirection: 'row',
       alignItems: 'baseline',
+      marginTop: 2,
     },
 
     measurement: {
